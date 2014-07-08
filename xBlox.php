@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @name Blox
@@ -129,7 +128,12 @@
 		}
 
 
+		function __construct($sdx=null){
+			$this->sdx = $sdx;
+		}
+
 		function autoRun($sDom){
+			$this->_comment("Entering through Blox");
 			// Does this need to run - everytime!?
 			
 			// if(!$sDom->AREA51){
@@ -138,6 +142,7 @@
 			// 	$blox = $q->Select('*','blox');
 			// 	$this->set('blox',$blox);
 			// }
+			 
 
 			if($sDom->Key['is']['admin']){
 
