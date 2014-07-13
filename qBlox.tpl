@@ -203,12 +203,11 @@ color: white;
     </div></div> -->
 
 	</div>
-<script type="text/javascript">
- 
-
+<script type="text/javascript"> 
 
     $(document).ready(function() {
     	// TODO: This is some tasty pasta... 
+    	// This controls the functions of the blox on the back panel of of the page when in master mode.
     	$('.blox .hover').click(function() { 
 
     		var id = $(this).parents('.blox').attr('blox-id') ;
