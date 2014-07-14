@@ -38,8 +38,13 @@
 					'blox'		=> array('Type'=>'varchar(50)'),
 					'params'	=> array('Type'=>'blob'), 
 					'online'	=> array('Type'=>'boolean','Default'=>true)
+				),
+				// This should hold the config for the blox config. 
+				'blox_blox' => array(
+					'quest_id'  	=> array('Type'=>'int(8)'),
+					'cfg_option'	=> array('Type'=>'varchar(50)'),
+					'cfg_params'	=> array('Type'=>'blob')
 				)
-
 			);
 		}
 
@@ -543,9 +548,47 @@ $blox 	= $q->Select('*','blox_quest',array(
 			@desc Simple Easy to use Custom Code Blox
 			@icon html5
 		**/
-		public function html()
+		public function html($id=0)
 		{
-			# code...cus
+			$q = $this->q();
+
+			$b = $q->Select('*','blox_blox',array(
+				'quest_id'=> $id
+			));
+
+
+
+			if ( $this->Key['is']['admin'] && isset($_POST['blox']) ) {
+				$blox = $_POST['blox'];
+
+				if(empty($b)){
+					$id = $q->Insert('blox_blox', $blox);
+				}else{
+					$q->Update('blox_blox', $blox, array(
+						'id' => $b[0]['id']
+					));
+				} 
+
+				return array(
+					'success' => (empty($q->error)),
+					'error'   => $q->error,
+					'post' 	  => $_POST
+				);
+
+			}else{
+				if(!empty($b)){
+					$this->set('blox_cfg',$b[0]);
+				} 
+			}
+ 
+ 			$this->set('bloxid',$id);
+
+ 			return array(
+				'success' => (empty($q->error)),
+				'error'   => $q->error,
+				'post' 	  => $_POST
+			);
+
 		}
 
 		/**

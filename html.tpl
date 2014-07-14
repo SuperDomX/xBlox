@@ -1,10 +1,13 @@
 <div class="{$method}-blox"> 
 	<div class="front">
-		<a class="action btn btn-warning"><i class="fa fa-html5"></i></a>
+		<a class="action btn btn-warning btn-block"><i class="fa fa-html5"></i></a>
+		<div class="content">
+			{$blox_cfg.cfg_params}
+		</div>
 	</div>
 	<div class="back">
 		<!-- Fixed navbar -->
-		<div class="navbar navbar-default navbar-fixed-top"  role="navigation">
+		<div class="navbar navbar-default navbar-fixed-top" style="z-index: 99;"  role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -37,16 +40,21 @@
 						</a>
 
 						</li> -->
-						<button class="btn btn-warning active "><i class="fa fa-html5 "></i></button>
+						<button type="submit" class="edit-submit btn btn-success " value="">
+						 <!-- <i class="fa fa-gear fa-floppy-o"></i> -->
+						 <i class="fa fa-arrow-left"></i> </button> 
 						<!-- <button class="btn btn-warning  "><i class="fa fa-image "> Image</i></button>
 						<button class="btn btn-warning  "><i class="fa fa-paragraph "> Paragraph</i></button>
 						<button class="btn btn-warning  "><i class="fa fa-html5 "></i></button>
 						<button class="btn btn-warning  "><i class="fa fa-html5 "></i></button>
 						<button class="btn btn-warning  "><i class="fa fa-html5 "></i></button> -->
-						<button class="btn btn-danger" onclick=" editor.setHTML(''); $('#{$method}-html-source').html('');"><i class="fa fa-ban"></i></button>
-						 <button type="submit" class="edit-submit btn btn-success " value="">
-						 <!-- <i class="fa fa-gear fa-floppy-o"></i> -->
-						 <i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-cloud-upload"></i> <i class="fa fa-gear fa-spin"></i> </button> 
+						<a   class="btn btn-default active disabled " >
+				          	{include file="~blox/clock.tpl"}
+				        </a>
+
+						<button class="btn btn-warning active ">
+							<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-html5 "></i> {$method} <i class="fa fa-gear fa-spin"></i> 
+						</button>
 				          
 			          </div>
 
@@ -63,176 +71,79 @@
 			</div> 
 		</div>
 
-		<div class="row"> 
-			<div class="col-md-6">
-				 <div id="content-container">
-				    <div id="editor-wrapper">
-				        <div id="formatting-container" style="background: white;">
-				          <span class="ql-format-group">
-						  <select title="Font" class="ql-font">
-						    <option value="sans-serif" selected>Sans Serif</option>
-						    <option value="serif">Serif</option>
-						    <option value="monospace">Monospace</option>
-						    <option value="impact">Impact</option>
-						  </select>
-						  <select title="Size" class="ql-size">
-						    <option value="10px">Small</option>
-						    <option value="13px" selected>Normal</option>
-						    <option value="18px">Large</option>
-						    <option value="32px">Huge</option>
-						  </select>
-						</span>
-						<span class="ql-format-group">
-						  <span title="Bold" class="ql-format-button ql-bold"></span>
-						  <span class="ql-format-separator"></span>
-						  <span title="Italic" class="ql-format-button ql-italic"></span>
-						  <span class="ql-format-separator"></span>
-						  <span title="Underline" class="ql-format-button ql-underline"></span>
-						  <span class="ql-format-separator"></span>
-						  <span title="Strikethrough" class="ql-format-button ql-strike"></span>
-						</span>
-						<span class="ql-format-group">
-						  <select title="Text Color" class="ql-color">
-						    <option value="rgb(0, 0, 0)" label="rgb(0, 0, 0)" selected></option>
-						    <option value="rgb(230, 0, 0)" label="rgb(230, 0, 0)"></option>
-						    <option value="rgb(255, 153, 0)" label="rgb(255, 153, 0)"></option>
-						    <option value="rgb(255, 255, 0)" label="rgb(255, 255, 0)"></option>
-						    <option value="rgb(0, 138, 0)" label="rgb(0, 138, 0)"></option>
-						    <option value="rgb(0, 102, 204)" label="rgb(0, 102, 204)"></option>
-						    <option value="rgb(153, 51, 255)" label="rgb(153, 51, 255)"></option>
-						    <option value="rgb(255, 255, 255)" label="rgb(255, 255, 255)"></option>
-						    <option value="rgb(250, 204, 204)" label="rgb(250, 204, 204)"></option>
-						    <option value="rgb(255, 235, 204)" label="rgb(255, 235, 204)"></option>
-						    <option value="rgb(255, 255, 204)" label="rgb(255, 255, 204)"></option>
-						    <option value="rgb(204, 232, 204)" label="rgb(204, 232, 204)"></option>
-						    <option value="rgb(204, 224, 245)" label="rgb(204, 224, 245)"></option>
-						    <option value="rgb(235, 214, 255)" label="rgb(235, 214, 255)"></option>
-						    <option value="rgb(187, 187, 187)" label="rgb(187, 187, 187)"></option>
-						    <option value="rgb(240, 102, 102)" label="rgb(240, 102, 102)"></option>
-						    <option value="rgb(255, 194, 102)" label="rgb(255, 194, 102)"></option>
-						    <option value="rgb(255, 255, 102)" label="rgb(255, 255, 102)"></option>
-						    <option value="rgb(102, 185, 102)" label="rgb(102, 185, 102)"></option>
-						    <option value="rgb(102, 163, 224)" label="rgb(102, 163, 224)"></option>
-						    <option value="rgb(194, 133, 255)" label="rgb(194, 133, 255)"></option>
-						    <option value="rgb(136, 136, 136)" label="rgb(136, 136, 136)"></option>
-						    <option value="rgb(161, 0, 0)" label="rgb(161, 0, 0)"></option>
-						    <option value="rgb(178, 107, 0)" label="rgb(178, 107, 0)"></option>
-						    <option value="rgb(178, 178, 0)" label="rgb(178, 178, 0)"></option>
-						    <option value="rgb(0, 97, 0)" label="rgb(0, 97, 0)"></option>
-						    <option value="rgb(0, 71, 178)" label="rgb(0, 71, 178)"></option>
-						    <option value="rgb(107, 36, 178)" label="rgb(107, 36, 178)"></option>
-						    <option value="rgb(68, 68, 68)" label="rgb(68, 68, 68)"></option>
-						    <option value="rgb(92, 0, 0)" label="rgb(92, 0, 0)"></option>
-						    <option value="rgb(102, 61, 0)" label="rgb(102, 61, 0)"></option>
-						    <option value="rgb(102, 102, 0)" label="rgb(102, 102, 0)"></option>
-						    <option value="rgb(0, 55, 0)" label="rgb(0, 55, 0)"></option>
-						    <option value="rgb(0, 41, 102)" label="rgb(0, 41, 102)"></option>
-						    <option value="rgb(61, 20, 102)" label="rgb(61, 20, 102)"></option>
-						  </select>
-						  <span class="ql-format-separator"></span>
-						  <select title="Background Color" class="ql-background">
-						    <option value="rgb(0, 0, 0)" label="rgb(0, 0, 0)"></option>
-						    <option value="rgb(230, 0, 0)" label="rgb(230, 0, 0)"></option>
-						    <option value="rgb(255, 153, 0)" label="rgb(255, 153, 0)"></option>
-						    <option value="rgb(255, 255, 0)" label="rgb(255, 255, 0)"></option>
-						    <option value="rgb(0, 138, 0)" label="rgb(0, 138, 0)"></option>
-						    <option value="rgb(0, 102, 204)" label="rgb(0, 102, 204)"></option>
-						    <option value="rgb(153, 51, 255)" label="rgb(153, 51, 255)"></option>
-						    <option value="rgb(255, 255, 255)" label="rgb(255, 255, 255)" selected></option>
-						    <option value="rgb(250, 204, 204)" label="rgb(250, 204, 204)"></option>
-						    <option value="rgb(255, 235, 204)" label="rgb(255, 235, 204)"></option>
-						    <option value="rgb(255, 255, 204)" label="rgb(255, 255, 204)"></option>
-						    <option value="rgb(204, 232, 204)" label="rgb(204, 232, 204)"></option>
-						    <option value="rgb(204, 224, 245)" label="rgb(204, 224, 245)"></option>
-						    <option value="rgb(235, 214, 255)" label="rgb(235, 214, 255)"></option>
-						    <option value="rgb(187, 187, 187)" label="rgb(187, 187, 187)"></option>
-						    <option value="rgb(240, 102, 102)" label="rgb(240, 102, 102)"></option>
-						    <option value="rgb(255, 194, 102)" label="rgb(255, 194, 102)"></option>
-						    <option value="rgb(255, 255, 102)" label="rgb(255, 255, 102)"></option>
-						    <option value="rgb(102, 185, 102)" label="rgb(102, 185, 102)"></option>
-						    <option value="rgb(102, 163, 224)" label="rgb(102, 163, 224)"></option>
-						    <option value="rgb(194, 133, 255)" label="rgb(194, 133, 255)"></option>
-						    <option value="rgb(136, 136, 136)" label="rgb(136, 136, 136)"></option>
-						    <option value="rgb(161, 0, 0)" label="rgb(161, 0, 0)"></option>
-						    <option value="rgb(178, 107, 0)" label="rgb(178, 107, 0)"></option>
-						    <option value="rgb(178, 178, 0)" label="rgb(178, 178, 0)"></option>
-						    <option value="rgb(0, 97, 0)" label="rgb(0, 97, 0)"></option>
-						    <option value="rgb(0, 71, 178)" label="rgb(0, 71, 178)"></option>
-						    <option value="rgb(107, 36, 178)" label="rgb(107, 36, 178)"></option>
-						    <option value="rgb(68, 68, 68)" label="rgb(68, 68, 68)"></option>
-						    <option value="rgb(92, 0, 0)" label="rgb(92, 0, 0)"></option>
-						    <option value="rgb(102, 61, 0)" label="rgb(102, 61, 0)"></option>
-						    <option value="rgb(102, 102, 0)" label="rgb(102, 102, 0)"></option>
-						    <option value="rgb(0, 55, 0)" label="rgb(0, 55, 0)"></option>
-						    <option value="rgb(0, 41, 102)" label="rgb(0, 41, 102)"></option>
-						    <option value="rgb(61, 20, 102)" label="rgb(61, 20, 102)"></option>
-						  </select>
-						</span>
-						<span class="ql-format-group">
-						  <span title="List" class="ql-format-button ql-list"></span>
-						  <span class="ql-format-separator"></span>
-						  <span title="Bullet" class="ql-format-button ql-bullet"></span>
-						  <span class="ql-format-separator"></span>
-						  <select title="Text Alignment" class="ql-align">
-						    <option value="left" label="Left" selected></option>
-						    <option value="center" label="Center"></option>
-						    <option value="right" label="Right"></option>
-						    <option value="justify" label="Justify"></option>
-						  </select>
-						</span>
-						      <span class="ql-format-group">
-						        <span title="Link" class="ql-format-button ql-link"></span>
-						        <span class="ql-format-separator"></span>
-						        <span title="Image" class="ql-format-button ql-image"></span>
-						      </span>
-						        </div>
-						        <div id="editor-container" style="background-color: white;"></div>
-						      </div>
-						    </div>
-			</div>
-			<div class="col-md-6">
-				<button onclick="editor.setHTML($('#{$method}-html-source').html());"><i class="fa fa-arrow-left"></i></button>
-				<textarea class="row col form-control"  rows="20" cols="50" id="{$method}-html-source" style="font-size: 14px; background-color: white;" >
-					
-				</textarea>
-			</div>
-		</div>
-		 	 <link rel="stylesheet" type="text/css" href="/bin/css/syntax.css">
-    
-    	 <link rel="stylesheet" type="text/css" href="/bin/css/styles.css">
-    	
-		 <link rel="stylesheet" type="text/css" href="/bin/css/quill.snow.css">
+		<div class="jumbotron">  
+			<script src="/bin/js/tinymce/tinymce.min.js"></script>
+			<script type="text/javascript">
+				tinymce.init({
+				    selector: "#html5-source",
+				    plugins: [
+				        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+				        "searchreplace wordcount visualblocks visualchars code fullscreen",
+				        "insertdatetime media nonbreaking save table contextmenu directionality",
+				        "emoticons template paste textcolor colorpicker textpattern"
+				    ],
+					toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+				    toolbar2: "print code html preview media | forecolor backcolor emoticons",
+				    image_advtab: true,
+				    apply_source_formatting : true,
+
+				});
+
+				tinymce.xBloxSave = function(t) {
+					tinymce.get('html5-source').save();
+	 				$.ajax({
+			    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
+			    		type     : "POST",	
+						data     : $(t).serialize(),
+						dataType : "json",
+					    success: function(data){ 
+							if(data.success){
+								$('.{$method}-blox .edit-submit').click();
+							}else{
+								alert(data.error);
+							}
+					    }
+			    	}); 
+			    }
+			</script> 
+			<form method="post" action="./" onsubmit="tinymce.xBloxSave(this);" >
+			    <input name="blox[quest_id]" type="hidden" value="{$bloxid}" /> 
+			    <input name="blox[cfg_option]" type="hidden" value="html5-source" /> 
+			    <textarea id="html5-source" name="blox[cfg_params]" style="width:100%" rows="20">
+			    	{$blox_cfg.cfg_params}
+			    </textarea>  
+			</form>
+		</div> 
 	
     
-    <script type="text/javascript" src="/bin/js/quill.js"></script>
     <script type="text/javascript">
-      var editor = new Quill('#editor-container', { 
-        modules: {
-          'toolbar': { container: '#formatting-container' },
-          'image-tooltip': true,
-          'link-tooltip': true
-        },
-        theme : 'snow'
-      });
-      editor.on('selection-change', function(range) {
-        console.log('selection-change', range)
-      });
-      editor.on('text-change', function(delta, source) {
-        console.log('text-change', delta, source)
+    //   var editor = new Quill('#editor-container', { 
+    //     modules: {
+    //       'toolbar': { container: '#formatting-container' },
+    //       'image-tooltip': true,
+    //       'link-tooltip': true
+    //     },
+    //     theme : 'snow'
+    //   });
+    //   editor.on('selection-change', function(range) {
+    //     console.log('selection-change', range)
+    //   });
+    //   editor.on('text-change', function(delta, source) {
+    //     console.log('text-change', delta, source)
 
 
-        if(source != 'api'){
-	 		var html = editor.getHTML(); 
-	        $('#{$method}-html-source').html('');
-	        $('#{$method}-html-source').html(html);
-        }else{
-        	var html = $('#{$method}-html-source').html();
-        	editor.setHTML(html);
-        }
+    //     if(source != 'api'){
+	 		// var html = editor.getHTML(); 
+	   //      $('#{$method}-html-source').html('');
+	   //      $('#{$method}-html-source').html(html);
+    //     }else{
+    //     	var html = $('#{$method}-html-source').html();
+    //     	editor.setHTML(html);
+    //     }
 
         
 
-      });
+    //   });
 
   //     editor.on('text-change', function(delta, source) {
 		//   if (source == 'api') {
@@ -250,14 +161,23 @@
 	  // set up block configuration
 	    $('.{$method}-blox .action').click(function(){ 
 	      $('.{$method}-blox').addClass('flip');
-	      $('.{$method}-blox').parent().toggleClass('fullscreen-me');
+	      $('.{$method}-blox').parent().addClass('fullscreen-me');
 	      
 	    });
 	    $('.{$method}-blox .edit-submit').click(function(e){ 
-	      $('.{$method}-blox').removeClass('flip');
-		  $('.{$method}-blox').parent().toggleClass('fullscreen-me');
-	      // why not update that list for fun?
 	      
+			$('.{$method}-blox').removeClass('flip');
+
+			$('.{$method}-blox').parent().removeClass('fullscreen-me'); 
+
+			// why not update that list for fun?
+			$('.{$method}-blox .front .content').html(
+				tinymce.get('html5-source').getContent()
+			);
+	      
+			// $('#o-blox-{$o.blox}-{$o.id}').load('/html/{$o.blox|substr:1|strtolower|replace:'-':'/'}', function  () {
+			// });
+
 	      e.preventDefault();
 	    });
 	</script>
@@ -316,7 +236,7 @@
 	left                        : 0;
 	z-index                     : 900;
 	width                       : inherit;
-	height                      : inherit;
+	height                      : auto;
 	/*border                      : 0px solid #ccc;*/
 	/*background                  : #6b7077;*/
 	/*text-align                  : center;*/
@@ -378,13 +298,13 @@
 	-webkit-transition          : all .4s ease-in-out;
 	transition                  : all .4s ease-in-out;
 
-
+visibility: hidden;
 	}
 
   .{$method}-blox.flip .back { 
 	z-index           : 1000;
 	/*background      : #80868d;*/
-	 
+	 visibility: visible;
 	/*padding-top       : 50px;*/
 	-webkit-transform : rotateX(0deg) rotateY(0deg);
 	-moz-transform    : rotateX(0deg) rotateY(0deg);
