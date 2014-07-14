@@ -108,11 +108,9 @@
 			           
 				</div><!--/.nav-collapse -->
 			</div> 
-		</div>
-
+		</div> 
 		<div class="jumbotron">  
-			<script src="/bin/js/tinymce/tinymce.min.js"></script>
-
+			<script src="/bin/js/tinymce/tinymce.min.js"></script> 
 			{include file="../../html/templates/jumbotron.tpl" assign=jumbotron}
 			{include file="../../html/templates/3-col.tpl" assign=3col}
 			<script type="text/javascript">
