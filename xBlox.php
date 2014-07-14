@@ -2,7 +2,7 @@
 /**
  * @name Blox
  * @desc Building your Domain blox by blox
- * @version v1.0.11.10.21.18.02
+ * @version v1.1
  * @author i@xtiv.net
  * @icon blueprint4.png
  * @mini cubes
