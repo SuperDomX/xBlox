@@ -84,7 +84,10 @@
 		        { title: 'Jumbotron', content: '{$jumbotron|strip}' },
 
 		        {include file="../../html/templates/3-col.tpl" assign=3col}
-		        { title: '3 Columns', content: '{$3col|strip}' }
+		        { title: '3 Columns', content: '{$3col|strip}' },
+
+		        {include file="../../html/templates/cover.tpl" assign=cover}
+		        { title: 'Cover', content: '{$cover|strip}' }
 			]
 		}); 
 	</script> 

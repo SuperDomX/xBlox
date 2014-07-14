@@ -36,9 +36,9 @@
 	-->
 	
 	<div class="front">
-		<a class="action btn btn-warning btn-block"><i class="fa fa-jsfiddle"></i></a>
+		<a class="action btn btn-warning btn-block">CSS <i class="fa fa-css3"> </i></a>
 	{/if}
-		<div id="html5-source-{$bloxid}" class="content">
+		<div id="css-source-{$bloxid}" class="content">
 			{$blox_cfg.cfg_params}
 		</div>
 	{if $masterKey.is.admin}
@@ -47,7 +47,7 @@
  	
  	<script src="/bin/js/tinymce/tinymce.min.js"></script>
 
-	<div class="back" style="overflow: hidden;">
+	<div class="back">
 		<!-- Fixed navbar -->
 		<div class="navbar navbar-default navbar-fixed-top navbar-inverse" style="z-index: 99;"  role="navigation">
 			<div class="container">
@@ -93,7 +93,7 @@
 						
 
 						<button class="btn btn-warning active ">
-							<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-jsfiddle "></i> [mesh] <i class="fa fa-gear fa-spin"></i> 
+							<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-html5 "></i> {$method} <i class="fa fa-gear fa-spin"></i> 
 						</button>
 				         <a   class="btn btn-default active disabled " >
 				          	{include file="~blox/clock.tpl"}
@@ -112,9 +112,96 @@
 			           
 				</div><!--/.nav-collapse -->
 			</div> 
-		</div>  
-		<iframe width="100%" height="99.75%" border="0" style="border: 0; overflow: hidden;" src="/{$toBackDoor}/{$suite}/x{$Xtra|ucfirst}/mesh-code-editor/index.html"> 
-		</iframe> 
+		</div> 
+		<div class="jumbotron">  
+			{include file="../../html/templates/jumbotron.tpl" assign=jumbotron}
+			{include file="../../html/templates/3-col.tpl" assign=3col}
+			<script type="text/javascript">
+				tinymce.init({
+				    selector: "#css-source",
+				    plugins: [
+				        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+				        "searchreplace wordcount visualblocks visualchars code fullscreen",
+				        "insertdatetime media nonbreaking save table contextmenu directionality",
+				        "emoticons template paste textcolor colorpicker textpattern"
+				    ],
+					toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+				    toolbar2: "print code html preview media | forecolor backcolor emoticons",
+				    image_advtab: true,
+				    apply_source_formatting : true,
+				    content_css : "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css,//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css",
+					templates: [
+					        { title: 'Jumbotron', content: '{$jumbotron|strip}' },
+					        { title: '3 Columns', content: '{$3col|strip}' }
+					]
+				});
+
+				tinymce.xBloxSave = function(t) {
+					tinymce.get('css-source').save();
+	 				$.ajax({
+			    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
+			    		type     : "POST",	
+						data     : $(t).serialize(),
+						dataType : "json",
+					    success: function(data){ 
+							if(data.success){
+								$('.{$method}-blox .edit-submit').click();
+							}else{
+								alert(data.error);
+							}
+					    }
+			    	}); 
+			    }
+			</script> 
+			<form method="post" action="./" onsubmit="tinymce.xBloxSave(this);" >
+			    <input name="blox[quest_id]" type="hidden" value="{$bloxid}" /> 
+			    <input name="blox[cfg_option]" type="hidden" value="css-source" /> 
+			    <textarea id="css-source" name="blox[cfg_params]" style="width:100%" rows="20">
+			    	{$blox_cfg.cfg_params}
+			    </textarea>  
+			</form>
+		</div> 
+	
+    
+    <script type="text/javascript">
+    //   var editor = new Quill('#editor-container', { 
+    //     modules: {
+    //       'toolbar': { container: '#formatting-container' },
+    //       'image-tooltip': true,
+    //       'link-tooltip': true
+    //     },
+    //     theme : 'snow'
+    //   });
+    //   editor.on('selection-change', function(range) {
+    //     console.log('selection-change', range)
+    //   });
+    //   editor.on('text-change', function(delta, source) {
+    //     console.log('text-change', delta, source)
+
+
+    //     if(source != 'api'){
+	 		// var html = editor.getHTML(); 
+	   //      $('#{$method}-html-source').html('');
+	   //      $('#{$method}-html-source').html(html);
+    //     }else{
+    //     	var html = $('#{$method}-html-source').html();
+    //     	editor.setHTML(html);
+    //     }
+
+        
+
+    //   });
+
+  //     editor.on('text-change', function(delta, source) {
+		//   if (source == 'api') {
+		//     console.log("An API call triggered this change.");
+		//   } else if (source == 'user') {
+		//     console.log("A user action triggered this change.");
+		//   }
+		// });
+
+    </script>
+				
 	</div>
 
 	<script type="text/javascript">
@@ -132,7 +219,7 @@
 
 			// why not update that list for fun?
 			$('.{$method}-blox .front .content').html(
-				tinymce.get('html5-source').getContent()
+				tinymce.get('css-source').getContent()
 			);
 	      
 			// $('#o-blox-{$o.blox}-{$o.id}').load('/html/{$o.blox|substr:1|strtolower|replace:'-':'/'}', function  () {

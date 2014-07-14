@@ -544,9 +544,9 @@ $blox 	= $q->Select('*','blox_quest',array(
 
 		/**
 			@name html
-			@blox HTML
+			@blox [mesh]
 			@desc Simple Easy to use Custom Code Blox
-			@icon html5
+			@icon jsfiddle
 		**/
 		public function html($id=0)
 		{
@@ -595,7 +595,7 @@ $blox 	= $q->Select('*','blox_quest',array(
 			@name tinyMCE
 			@blox tinyMCE
 			@desc The Famous tinyMCE editor
-			@icon html5
+			@icon keyboard-o
 		**/
 		public function tinyMCE($id=0)
 		{
@@ -641,23 +641,23 @@ $blox 	= $q->Select('*','blox_quest',array(
 		}
 
 		/**
-			@name css3
+			@name css
 			@blox CSS
 			@desc Simple Easy to use Custom Code Blox
 			@icon css3
 		**/
-		public function css3()
+		public function css()
 		{
 			# code...
 		}
 
 		/**
-			@name javascript
+			@name js
 			@blox Javascript
 			@desc Simple Easy to use Custom Code Blox
 			@icon code
 		**/
-		public function javascript()
+		public function js()
 		{
 			# code...
 		}
