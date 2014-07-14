@@ -44,8 +44,7 @@
 	{if $masterKey.is.admin}
 	</div>
  
- 	
- 	<script src="/bin/js/tinymce/tinymce.min.js"></script>
+ 
 
 	<div class="back">
 		<!-- Fixed navbar -->

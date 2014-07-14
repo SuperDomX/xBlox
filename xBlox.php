@@ -592,6 +592,55 @@ $blox 	= $q->Select('*','blox_quest',array(
 		}
 
 		/**
+			@name tinyMCE
+			@blox tinyMCE
+			@desc The Famous tinyMCE editor
+			@icon html5
+		**/
+		public function tinyMCE($id=0)
+		{
+			$q = $this->q();
+
+			$b = $q->Select('*','blox_blox',array(
+				'quest_id'=> $id
+			));
+
+
+
+			if ( $this->Key['is']['admin'] && isset($_POST['blox']) ) {
+				$blox = $_POST['blox'];
+
+				if(empty($b)){
+					$id = $q->Insert('blox_blox', $blox);
+				}else{
+					$q->Update('blox_blox', $blox, array(
+						'id' => $b[0]['id']
+					));
+				} 
+
+				return array(
+					'success' => (empty($q->error)),
+					'error'   => $q->error,
+					'post' 	  => $_POST
+				);
+
+			}else{
+				if(!empty($b)){
+					$this->set('blox_cfg',$b[0]);
+				} 
+			}
+ 
+ 			$this->set('bloxid',$id);
+
+ 			return array(
+				'success' => (empty($q->error)),
+				'error'   => $q->error,
+				'post' 	  => $_POST
+			);
+
+		}
+
+		/**
 			@name css3
 			@blox CSS
 			@desc Simple Easy to use Custom Code Blox
