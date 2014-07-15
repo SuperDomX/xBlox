@@ -100,20 +100,13 @@
 		                                </a> 
 		                            </li>
 	                             {/foreach} -->
-	                     <button class="btn btn-warning active" onclick="window.meshReset();">
-							    <i class="fa fa-pause "></i> 
-						</button>
-
-						<button class="btn btn-danger ">
-							<i class="fa fa-eject "></i> 
-						</button>
-				        <a   class="btn btn-default active disabled " >
-				          	{include file="~blox/clock.tpl"}
-				        </a>
+	                     
 
 						 <div class="btn-group">
 	                        <a href="#" title="Messages" id="messages" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-	                            <i class="fa fa-backward"></i>
+	                            
+	                    	<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-backward"></i> <i class="fa fa-gear fa-spin"></i> 
+
 	                        </a>
 	                        <ul class="dropdown-menu versions" role="menu">
 	                        	<li class="dropdown-header"> <i class="fa fa-backward"></i>
@@ -206,9 +199,19 @@
 
 	                        </ul>
 	                    </div>
+	                    <a   class="btn btn-default active disabled " >
+				          	{include file="~blox/clock.tpl"}
+				        </a>
 
-	                    
+
+						<button class="btn btn-danger ">
+							<i class="fa fa-eject "></i> 
+						</button>
+				        
 						
+	                    <button class="btn btn-warning active" onclick="window.meshReset();">
+							    <i class="fa fa-pause "></i> 
+						</button>
 						
 						 
 						<!-- <button class="btn btn-warning  "><i class="fa fa-image "> Image</i></button>
@@ -221,7 +224,7 @@
 						
 						
 	                    <button type="submit" class="edit-submit btn btn-success " value="">
-	                    	<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-play"></i> <i class="fa fa-gear fa-spin"></i> 
+	                    	<i class="fa fa-play"></i>
 						</button> 
 						
 
@@ -230,11 +233,120 @@
 
 			          <div class="nav navbar-nav navbar-right btn-group blox-bar-btns" style="margin-top: 5px;">
 
-							<a class="btn btn-primary btn-lg"  onclick="bloxSwitch(false);"><i class="fa fa-user-md"></i></a>
+							<!-- <a class="btn btn-primary btn-lg"  onclick="bloxSwitch(false);"><i class="fa fa-user-md"></i></a> -->
 							<a class="btn btn-primary btn-lg"  onclick="bloxSwitch(false);"><i class="fa fa-medkit"></i></a>
 							
 							<!-- <a class="btn btn-success active disabled btn-lg" onclick="bloxSwitch(true);"><i class="fa fa-eye"></i></a> -->
-			          	
+				          	<div class="btn-group ">
+		                        <a href="#" title="Messages" id="messages" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">
+		                            <i class="fa fa-user-md "></i> <span class="count badge">80%</span>
+		                        </a>
+		                        <ul id="messages-menu" class="dropdown-menu messages" role="menu">
+		                        	<li class="dropdown-header"> <i class="fa fa-cube"></i> Blox Stats <i class="fa fa-bar-chart-o"></i></li>
+		                        	<li class="divider"></li>
+		                            <li role="presentation">
+		                                <a href="#" class="message">
+		                                    <div class="row">
+		                                    	<table width="100%">
+		                                    		<tr>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-heart"></i>
+		                                    			</td>
+		                                    			<td>
+		                                    				
+		                                    				<div class="progress"> 
+										                       <div class="progress-bar progress-bar-striped active progress-bar-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+										                            HP  90%
+										                       </div>  
+										                    </div>
+
+		                                    			</td>
+		                                    		</tr>
+		                                    	</table> 
+		                                    </div>
+		                                </a>
+		                            </li>
+		                            <li role="presentation">
+		                                <a href="#" class="message">
+		                                    <div class="row">
+			                                    <table width="100%">
+		                                    		<tr>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-envelope"></i>
+		                                    			</td>
+		                                    			<td>
+		                                    				
+		                                    				<div  >
+						                                        <div class="progress"> 
+											                       <div class="progress-bar progress-bar-striped progress-bar-info active " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+											                            EP <i class="fa   fa-envelope"></i> 60%
+											                       </div>  
+											                    </div>
+						                                    </div>
+
+		                                    			</td>
+		                                    		</tr>
+		                                    	</table> 
+		                                    </div>
+		                                </a>
+		                            </li>
+		                            <li role="presentation">
+		                                <a href="#" class="message">
+		                                    <div class="row">
+			                                    <table width="100%">
+		                                    		<tr>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-magic"></i>
+		                                    			</td>
+		                                    			<td>
+		                                    				
+		                                    				<div  >
+						                                        <div class="progress"> 
+											                       <div class="progress-bar progress-bar-striped active progress-bar-success" role="progressbar" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100" style="width: 97%;">
+											                             MP  <i class="fa   fa-magic  "></i> 97%
+											                       </div>  
+											                    </div>
+						                                    </div>
+
+		                                    			</td>
+		                                    		</tr>
+		                                    	</table> 
+	                                    	</div> 
+		                                    
+		                                </a>
+		                            </li>
+		                            <li role="presentation">
+		                                <a href="#" class="message">
+		                                    <div class="row">
+			                                    <table width="100%">
+		                                    		<tr>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-star"></i>
+		                                    			</td>
+		                                    			<td>
+		                                    				
+		                                    				<div  >
+						                                        <div class="progress"> 
+											                       <div class="progress-bar progress-bar-striped active progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+											                            SP <i class="fa   fa-star"></i> 60%
+											                       </div>  
+											                    </div>
+						                                    </div>
+
+		                                    			</td>
+		                                    		</tr>
+		                                    	</table>  
+	                                    	</div>
+		                                    
+		                                </a>
+		                            </li>
+		                            <li role="presentation">
+		                                <a href="/x/analytics" class="text-align-center see-all">
+		                                     <i class="fa fa-stethoscope"></i> See all Vitals <i class="fa fa-arrow-right"></i>
+		                                </a>
+		                            </li>
+		                        </ul>
+		                    </div>
 			          </div>
 
 			           
