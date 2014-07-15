@@ -116,8 +116,8 @@
 	                        	<li class="divider"></li> -->
 	                             {foreach $timestamps as $time => $stamp}
 	                             	<li role="presentation">
-		                                <a href="#" class="message">
-		                                    {$stamp.cfg_timestamp}
+		                                <a href="#" onclick="window.meshTimeLoad('{$stamp.cfg_timestamp}')" class="message">
+		                                    {$stamp.cfg_timestamp|date_format:"%B, %a %e, %I:%M:(%S) %p"}
 		                                 </a> 
 		                            </li>
 	                             {/foreach}
@@ -139,7 +139,7 @@
 				</div><!--/.nav-collapse -->
 			</div> 
 		</div>  
-		<iframe id="mesh-code-editor" width="100%" height="100%" border="0" style="border: 0; overflow: hidden;" src="about:blank"> 
+		<iframe id="mesh-code-editor" width="100%" height="100%" border="0" style="border: 0; overflow: hidden;" src="about:blank" > 
 		</iframe> 
 	</div>
 
@@ -148,17 +148,57 @@
 	    $('.{$method}-blox .action').click(function(){ 
 	      $('.{$method}-blox').addClass('flip');
 	      $('.{$method}-blox').parent().addClass('fullscreen-me');
+
+
+	      $('#mesh-code-editor').on('load', window.meshOnLoad);
+
 	      $('#mesh-code-editor').attr({
 	      		src : '/{$toBackDoor}/{$suite}/x{$Xtra|ucfirst}/mesh-code-editor/index.html'
 	      });
+
+
 	    });
 
 	    window.meshOnLoad = function  () {
-	    	var i = $('#mesh-code-editor')[0].contentWindow;
-	    	var html   =	i.htmlBox.setValue('{$blox_cfg.html|strip|escape:"htmlall"}');
-	    	var css    =	i.cssBox.setValue('{$blox_cfg.css|strip|escape:"htmlall"}');
-	    	var js     =	i.jsBox.setValue('{$blox_cfg.js|strip|escape:"htmlall"}');
+	    	$.ajax({
+	    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
+	    		type     : "GET",	 
+				dataType : "json",
+			    success: function(data){ 
+					if(data.success){
+						console.log("Loaded");
+						var i = $('#mesh-code-editor')[0].contentWindow;
+				    	var html   =	i.htmlBox.setValue(data.html);
+				    	var css    =	i.cssBox.setValue(data.css);
+				    	var js     =	i.jsBox.setValue(data.js);
+					}else{
+						alert(data.error);
+					}
+			    }
+	    	}); 
 	    }
+
+	     window.meshTimeLoad = function  (time) {
+	     		// alert(time);
+	    	$.ajax({
+	    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/"+ time+ "/.json",
+	    		type     : "GET",	 
+				dataType : "json",
+			    success: function(data){ 
+			    	DATA = data;
+					if(data.success){
+						console.log("Loaded");
+						var i = $('#mesh-code-editor')[0].contentWindow;
+				    	var html   =	i.htmlBox.setValue(data.html);
+				    	var css    =	i.cssBox.setValue(data.css);
+				    	var js     =	i.jsBox.setValue(data.js);
+					}else{
+						alert(data.error);
+					}
+			    }
+	    	}); 
+	    }
+
 
 	    $('.{$method}-blox .edit-submit').click(function(e){ 
 

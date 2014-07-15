@@ -568,32 +568,39 @@ $blox 	= $q->Select('*','blox_quest',array(
 			@desc Simple Easy to use Custom Code Blox
 			@icon jsfiddle
 		**/
-		public function html($id=0)
+		public function html($id=0,$time=null)
 		{
 			$q = $this->q();
 
-			
-			// var_dump($q->error);
-			// exit;
-			// Select all blox that have been setup on this quest/pages
-			$q->mBy['cfg_timestamp'] = 'DESC';  
-			$js = $q->Select('*','blox_blox',array(
-				'quest_id'   => $id,
-				'cfg_option' => 'js-source',
-			));
+			// Select all blox that have been setup on this quest/pages			
+			$q->mBy['id'] = 'DESC'; 
 
-			$q->mBy['cfg_timestamp'] = 'DESC'; 
-			$css = $q->Select('*','blox_blox',array(
-				'quest_id'   => $id,
-				'cfg_option' => 'css-source',
-			));
+			$needle = array( 
+				'quest_id'   => $id, 
+				'cfg_option' => 'css-source'
+			);
+
+			if($time){
+				$needle['cfg_timestamp'] = str_replace('%20', ' ', $time);
+			}
+
+			$css = $q->Select('*','blox_blox',$needle);
+
+			$tsql = $q->mSql;
 
 			$q->mBy['cfg_timestamp'] = 'DESC'; 
 			$html = $q->Select('*','blox_blox',array(
 				'quest_id'   => $id,
 				'cfg_option' => 'html-source',
+				'cfg_timestamp' => $css[0]['cfg_timestamp']
+			)); 
+
+			$q->mBy['cfg_timestamp'] = 'DESC';  
+			$js = $q->Select('*','blox_blox',array(
+				'quest_id'   => $id,
+				'cfg_option' => 'js-source',
+				'cfg_timestamp' => $css[0]['cfg_timestamp']
 			));
- 
 
 			$this->set('blox_cfg',array(
 				'css'  => $css[0]['cfg_params'],
@@ -603,21 +610,30 @@ $blox 	= $q->Select('*','blox_quest',array(
  
  			$this->set('bloxid',$id);
 
- 			$this->set('timestamps',$q->Select(
+ 			// $q->mBy['id'] = 'DESC'; 
+ 
+
+ 			$time = $q->Select(
  				'cfg_timestamp',
  				'blox_blox',
  				array(
  					'quest_id' => $id
- 				),
- 				'LEFT',
- 				'=',
- 				'AND',
- 				'cfg_timestamp'
- 			));
+ 				)
+ 			);
+
+ 			$time = $q->mSql; 
+
+ 			$time = $q->Q("SELECT * FROM ( $time ) as times GROUP BY cfg_timestamp ORDER BY cfg_timestamp DESC");
+
+ 			$this->set('timestamps',$time);
 
  			return array(
 				'success' => (empty($q->error)),
-				'error'   => $q->error 
+				'error'   => $q->error,
+				'timesql' => $tsql,
+				'css'  => $css[0]['cfg_params'],
+				'html' => $html[0]['cfg_params'],
+				'js'   => $js[0]['cfg_params']
 			);
 
 		}
