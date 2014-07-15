@@ -1,5 +1,7 @@
-<div class="{$method}-blox"> 
-	{if $masterKey.is.admin}   
+<div class="{$method}-blox-{$bloxid}"> 
+	{if $masterKey.is.admin}  
+
+
 	<!--                     
              77                       77777             
         7 .....                      7.....             
@@ -34,9 +36,10 @@
                     7..........                         
                         .....: 7   
 	-->
+	{include file="~blox/clock.tpl" assign=clock} 
 	
 	<div class="front">
-		<a class="action btn btn-info btn-block"><i class="fa fa-gear fa-spin"></i> <i class="fa fa-forward"></i> <i class="fa fa-gear fa-spin-reverse"></i></a>
+		<a class="action btn btn-lg btn-info btn-block"><i class="fa fa-gear fa-spin"></i> <i class="fa fa-forward"> <i class="fa fa-gear fa-spin-reverse"></i> </i> </a>
 	{/if}
 		<div id="mesh-source-{$bloxid}" class="content"> 
 			<style type="text/css">
@@ -84,7 +87,7 @@
 					
 
 
-						<div class="btn-group" style="margin-top: 10px;">
+						<div class="btn-group" style="margin-top: 5px;">
 						<!-- 	<li class="dropdown" ><a href="/x/" class="text text-danger dropdown-toggle" data-toggle="dropdown">
 						<img src="{$thumb}src=/bin/images/logos/sdx.png&w=123">
 						<strong class=" text text-success">Super</strong><span class="text-primary">Dom</span> 
@@ -102,12 +105,28 @@
 	                             {/foreach} -->
 	                     
 
-						 <div class="btn-group">
-	                        <a href="#" title="Messages" id="messages" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-	                            
-	                    	<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-backward"></i> <i class="fa fa-gear fa-spin"></i> 
+	                    
 
-	                        </a>
+						<button type="submit" class="btn btn-success btn-lg active" value="">
+	                    	<i class="fa fa-play"></i>
+						</button> 
+
+						<button class="btn btn-info btn-lg" id="{$method}-blox-{$bloxid}-fast-backward" onclick="window.meshette.loadTrack('{$tracks.first}')" >
+							<i class="fa fa-fast-backward"></i> 
+						</button>
+
+						<button class="btn btn-info btn-lg" id="{$method}-blox-{$bloxid}-backward" onclick="window.meshette.backward();"  >
+							<i class="fa fa-backward"></i> 
+						</button>
+						
+	                    
+						 <div class="btn-group">
+						 	<a  href="#" title="Messages" class="btn btn-default btn-lg" id ="{$method}-blox-{$bloxid}-track" data-toggle="dropdown" >
+								<i class="fa fa-gear fa-spin"></i> 
+								{$clock}
+								<i class="fa fa-gear fa-spin-reverse"></i>
+					        </a>
+
 	                        <ul class="dropdown-menu versions" role="menu">
 	                        	<li class="dropdown-header"> <i class="fa fa-backward"></i>
 	                        	Version History <i class="fa fa-code"></i></li>
@@ -169,11 +188,11 @@
 													                                </a> 
 													                                <ul class="dropdown-menu">
 													                                	<li class="dropdown-header"> <i class="fa fa-bookmark-o"></i>
-					                        						  					{$hour|replace:'_':": 00"}
+					                        						  					{$min} 
 					                        						  					<i class="fa fa-history fa-rotate-{$rotate}"></i></li>
 												                                   		 {foreach $seconds as $sec => $v}
 															                             	<li >
-																                                <a href="#" onclick="window.meshTimeLoad('{$v}');"  >
+																                                <a href="#" onclick="window.meshette.loadTrack('{$v}');"  >
 																                                     <i class="fa fa-crosshairs fa-spin-reverse"></i>
 																                                    {$sec}
 																                                </a> 
@@ -195,23 +214,22 @@
 				                            </ul>
 			                            </li>
 	                             	{/if}
-	                             {/foreach}
-
+	                             {/foreach} 
 	                        </ul>
 	                    </div>
-	                    <a   class="btn btn-default active disabled " >
-				          	{include file="~blox/clock.tpl"}
-				        </a>
 
+						<button class="btn btn-info btn-lg active disabled" id="{$method}-blox-{$bloxid}-fast-forward" onclick="window.meshette.forward();" >
+							<i class="fa fa-forward"></i> 
+						</button> 
 
-						<button class="btn btn-danger ">
-							<i class="fa fa-eject "></i> 
-						</button>
-				        
+						<button class="btn btn-info btn-lg active disabled" id="{$method}-blox-{$bloxid}-forward" onclick="window.meshette.loadTrack('{$tracks.last}')">
+							<i class="fa fa-fast-forward"></i> 
+						</button> 
+	                    
 						
-	                    <button class="btn btn-warning active" onclick="window.meshReset();">
-							    <i class="fa fa-pause "></i> 
-						</button>
+
+
+				        
 						
 						 
 						<!-- <button class="btn btn-warning  "><i class="fa fa-image "> Image</i></button>
@@ -223,11 +241,17 @@
 				        
 						
 						
-	                    <button type="submit" class="edit-submit btn btn-success " value="">
-	                    	<i class="fa fa-play"></i>
-						</button> 
+	                     
 						
+						
+						<button class="btn btn-warning btn-lg " onclick="window.meshReset();">
+							<i class="fa fa-eject "></i> 
+						</button>
 
+						<button class="btn btn-danger btn-lg edit-submit " >
+							     <i class="fa fa-circle "></i>  
+						</button>
+						
 
 			          </div>
 
@@ -249,9 +273,6 @@
 		                                    <div class="row">
 		                                    	<table width="100%">
 		                                    		<tr>
-		                                    			<td width="16px"> 
-			                                    	 		<i class="fa   fa-heart"></i>
-		                                    			</td>
 		                                    			<td>
 		                                    				
 		                                    				<div class="progress"> 
@@ -260,6 +281,9 @@
 										                       </div>  
 										                    </div>
 
+		                                    			</td>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-heart"></i>
 		                                    			</td>
 		                                    		</tr>
 		                                    	</table> 
@@ -271,9 +295,6 @@
 		                                    <div class="row">
 			                                    <table width="100%">
 		                                    		<tr>
-		                                    			<td width="16px"> 
-			                                    	 		<i class="fa   fa-envelope"></i>
-		                                    			</td>
 		                                    			<td>
 		                                    				
 		                                    				<div  >
@@ -285,6 +306,9 @@
 						                                    </div>
 
 		                                    			</td>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-envelope"></i>
+		                                    			</td>
 		                                    		</tr>
 		                                    	</table> 
 		                                    </div>
@@ -295,9 +319,6 @@
 		                                    <div class="row">
 			                                    <table width="100%">
 		                                    		<tr>
-		                                    			<td width="16px"> 
-			                                    	 		<i class="fa   fa-magic"></i>
-		                                    			</td>
 		                                    			<td>
 		                                    				
 		                                    				<div  >
@@ -308,6 +329,9 @@
 											                    </div>
 						                                    </div>
 
+		                                    			</td>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-magic"></i>
 		                                    			</td>
 		                                    		</tr>
 		                                    	</table> 
@@ -320,9 +344,6 @@
 		                                    <div class="row">
 			                                    <table width="100%">
 		                                    		<tr>
-		                                    			<td width="16px"> 
-			                                    	 		<i class="fa   fa-star"></i>
-		                                    			</td>
 		                                    			<td>
 		                                    				
 		                                    				<div  >
@@ -333,6 +354,9 @@
 											                    </div>
 						                                    </div>
 
+		                                    			</td>
+		                                    			<td width="16px"> 
+			                                    	 		<i class="fa   fa-star"></i>
 		                                    			</td>
 		                                    		</tr>
 		                                    	</table>  
@@ -359,9 +383,9 @@
 
 	<script type="text/javascript">
 	  // set up block configuration
-	    $('.{$method}-blox .action').click(function(){ 
-	      $('.{$method}-blox').addClass('flip');
-	      $('.{$method}-blox').parent().addClass('fullscreen-me');
+	    $('.{$method}-blox-{$bloxid} .action').click(function(){ 
+	      $('.{$method}-blox-{$bloxid}').addClass('flip');
+	      $('.{$method}-blox-{$bloxid}').parent().addClass('fullscreen-me');
 
 
 	      $('#mesh-code-editor').on('load', window.meshOnLoad);
@@ -373,9 +397,102 @@
 
 	    });
 
+
+
+	    window.meshette = {
+	    	trac_num : [{foreach $timestamps as $r => $c}'{$c.cfg_timestamp}',{/foreach}],
+	    	tracks : {
+	    		{foreach $timestamps as $r => $c}'{$c.cfg_timestamp}' : {$r},{/foreach}
+	    	}, 
+	    	first : '{$tracks.first}',
+	    	last : '{$tracks.last}',
+	    	//timestamps : {$timestamps},
+	    	loadTrack : function(time) {
+	    		this.playing = this.tracks[time];
+	     		// alert(time);
+		    	$.ajax({
+		    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/"+ time+ "/.json",
+		    		type     : "GET",	 
+					dataType : "json",
+				    success: function(data){ 
+				    	DATA = data;
+						if(data.success){
+							console.log("Loaded "+ time + " | Track #:"+ window.meshette.playing);
+							var i = $('#mesh-code-editor')[0].contentWindow;
+					    	var html   =	i.htmlBox.setValue(data.html);
+					    	var css    =	i.cssBox.setValue(data.css);
+					    	var js     =	i.jsBox.setValue(data.js);
+						}else{
+							alert(data.error);
+						}
+				    }
+		    	});
+
+		    	var b = '#{$method}-blox-{$bloxid}-';
+
+		    	var btn = {
+					ff : $(b+'fast-forward'), 
+					fb : $(b+'fast-backward'),
+					f  : $(b+ 'forward'),
+					b  : $(b+'backward'),
+					p : $(b+'track'),
+					on : function (btn) {
+						// body...
+						btn.removeClass('disabled');
+						btn.removeClass('active');
+					},
+					off : function(btn){
+						btn.addClass('disabled');
+						btn.addClass('active');
+					}
+		    	}
+
+		    	clock.setClock(time);
+
+		    	switch(this.playing){
+		    		case(this.tracks[this.first]):
+		    			btn.off(btn.fb);
+		    			btn.off(btn.b);
+		    			btn.on(btn.ff);
+		    			btn.on(btn.f);
+		    		break;
+		    		case(this.tracks[this.last]):
+		    			btn.on(btn.fb);
+		    			btn.on(btn.b);
+		    			btn.off(btn.ff);
+		    			btn.off(btn.f);
+		    		break;
+		    		default: 
+		    			btn.on(btn.fb);
+		    			btn.on(btn.b);
+		    			btn.on(btn.ff);
+		    			btn.on(btn.f);
+		    		break;
+		    	}
+		    },
+		    playing : 0,
+	    	backward : function  () { 
+	    		this.playing++; 
+	    		if(this.playing <= (this.trac_num.length-1) ){ 
+	    			this.loadTrack(this.trac_num[this.playing]); 
+	    		} 
+	    	},
+	    	forward : function  () {
+	    		this.playing--; 
+	    		if(this.playing >= 0 ){ 
+	    			this.loadTrack(this.trac_num[this.playing]); 
+	    		}
+	    	},
+	    	eject : function () { 
+		    	$('.{$method}-blox-{$bloxid}').removeClass('flip');
+				$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me');  
+	    	}
+
+	    };
+
 	    window.meshReset = function  () {
-	    	$('.{$method}-blox').removeClass('flip');
-			$('.{$method}-blox').parent().removeClass('fullscreen-me');  
+	    	$('.{$method}-blox-{$bloxid}').removeClass('flip');
+			$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me');  
 	    }
 
 	    window.meshOnLoad = function  () {
@@ -385,7 +502,7 @@
 				dataType : "json",
 			    success: function(data){ 
 					if(data.success){
-						console.log("Loaded");
+						console.log("Init Load");
 						var i = $('#mesh-code-editor')[0].contentWindow;
 				    	var html   =	i.htmlBox.setValue(data.html);
 				    	var css    =	i.cssBox.setValue(data.css);
@@ -419,9 +536,9 @@
 	    }
 
 
-	    $('.{$method}-blox .edit-submit').click(function(e){ 
+	    $('.{$method}-blox-{$bloxid} .edit-submit').click(function(e){ 
 
-	    	var content = $('.{$method}-blox .front .content');
+	    	var content = $('.{$method}-blox-{$bloxid} .front .content');
 
 	    	var i = $('#mesh-code-editor')[0].contentWindow;
 	    	var html   =	i.htmlBox.getValue();
@@ -438,8 +555,8 @@
 			content.append(c);
 			content.append(s);
 
-			$('.{$method}-blox').removeClass('flip');
-			$('.{$method}-blox').parent().removeClass('fullscreen-me'); 
+			$('.{$method}-blox-{$bloxid}').removeClass('flip');
+			$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me'); 
 
 			$.ajax({
 	    		url 	 : "/{$toBackDoor}/{$Xtra}/save/{$bloxid}/.json",
@@ -479,7 +596,7 @@
 	
 
 	<style type="text/css"> 
-		.{$method}-blox {  
+		.{$method}-blox-{$bloxid} {  
 			width               : 100%;
 			height              : 100%;
 			min-width           : 100px;
@@ -509,7 +626,7 @@
 
 	  /* -- make sure to declare a default for every property that you want animated -- */
 	  /* -- general styles, including Y axis rotation -- */
-	.{$method}-blox .front a{
+	.{$method}-blox-{$bloxid} .front a{
 		position           : absolute;
 		top                : -55px;  
 		left               : 0px;
@@ -518,12 +635,12 @@
 		transition         : all .3s linear;
 	}
 
-	.{$method}-blox .front:hover a{
+	.{$method}-blox-{$bloxid} .front:hover a{
 		top: 0px;
 		left: 0px;
 	}
 
-	.{$method}-blox .front { 
+	.{$method}-blox-{$bloxid} .front { 
 		overflow: hidden;
 		float                       : none;
 		position                    : absolute;
@@ -554,7 +671,7 @@
 		-webkit-transition          : all .4s ease-in-out;
 		transition                  : all .4s ease-in-out;
 	  }
-	  .{$method}-blox.flip .front { 
+	  .{$method}-blox-{$bloxid}.flip .front { 
 		z-index           : 900;
 		border-color      : #eee;
 		background        : #333;
@@ -565,7 +682,7 @@
 		transform         : rotateY(180deg);
 	  }
 
-		.{$method}-blox .back { 
+		.{$method}-blox-{$bloxid} .back { 
 		float                       : none;
 		position                    : absolute;
 		top                         : 0;
@@ -595,7 +712,7 @@
 	visibility: hidden;
 		}
 
-	  .{$method}-blox.flip .back { 
+	  .{$method}-blox-{$bloxid}.flip .back { 
 		z-index           : 1000;
 		/*background      : #80868d;*/
 		 visibility: visible;
@@ -618,7 +735,7 @@
 	 
 	 
 	</style>
-	<div id="blox{$method}-bloxCodeDialogs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowTitleLabel" aria-hidden="true" style=" height: 85px; overflow: hidden; position: absolute; top: 35%;   background-color : rgba(0,0,0,0.75);">
+	<div id="blox{$method}-blox-{$bloxid}CodeDialogs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="windowTitleLabel" aria-hidden="true" style=" height: 85px; overflow: hidden; position: absolute; top: 35%;   background-color : rgba(0,0,0,0.75);">
 		<div class=" text-center">
 			<a href="#" class="close" data-dismiss="modal">&times;</a>
 			<h3 style="color: white;"><a href="#" class="btn btn-danger btn-lg" onclick="closeDialog ();"><i class="fa"></i> On</a></h3>   

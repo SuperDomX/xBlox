@@ -626,37 +626,21 @@ $blox 	= $q->Select('*','blox_quest',array(
  			$time = $q->Q("SELECT * FROM ( $time ) as times GROUP BY cfg_timestamp ORDER BY cfg_timestamp DESC");
 
  			$this->set('timestamps',$time);
+ 			$this->set('tracks',array(
+ 				'first' => $time[count($time)-1]['cfg_timestamp'],
+ 				'last'  => $time[0]['cfg_timestamp']
+ 			));
+
 
  			$v = array();
-
- 			function returnA($a,$f){
- 				$a = (isset($a[$f])) ? $a[$f] : array();
-				return $a;				
-			}
-
  			foreach ($time as $r => $c) {
  				$t = strtotime($c['cfg_timestamp']);
- 				# code...
-
-
-
-
-				// $m[date("Y",$t)] = returnA($m,date("Y",$t));
-				// $m[date("Y",$t)][date("F",$t)] = returnA($m[date("Y",$t)],date("F",$t));
-				// $m[date("Y",$t)][date("F",$t)][date("d",$t)] = returnA($m[date("Y",$t)][date("F",$t)],date("d",$t));
-				// $m[date("Y",$t)][date("F",$t)][date("d",$t)][date("H",$t)] = returnA($m[date("Y",$t)][date("F",$t)][date("d",$t)],date("H",$t));
-				// $m[date("Y",$t)][date("F",$t)][date("d",$t)][date("H",$t)][date("i",$t)]               = returnA($m,date("Y",$t));
-				// 
 				$v[date("Y",$t)][date("F",$t)][date("l, d",$t)][date("h _ a",$t)][date("h:i",$t)][date("h:i:sa",$t)] = $c['cfg_timestamp'];
- 				 
  			}
-
-
 
  			return array(
 				'success' => (empty($q->error)),
-				'error'   => $q->error,
-				'timesql' => $tsql,
+				'error'   => $q->error, 
 				'versions' => $v,
 				'css'  => $css[0]['cfg_params'],
 				'html' => $html[0]['cfg_params'],
