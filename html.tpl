@@ -82,6 +82,8 @@
 							</li>
 						</ul> 
 					
+
+
 						<div class="btn-group" style="margin-top: 10px;">
 						<!-- 	<li class="dropdown" ><a href="/x/" class="text text-danger dropdown-toggle" data-toggle="dropdown">
 						<img src="{$thumb}src=/bin/images/logos/sdx.png&w=123">
@@ -90,6 +92,119 @@
 						</a>
 
 						</li> -->
+
+						 <!-- {foreach $timestamps as $time => $stamp}
+	                             	<li role="presentation">
+		                                <a href="#" onclick="window.meshTimeLoad('{$stamp.cfg_timestamp}')" class="message">
+		                                    {$stamp.cfg_timestamp|date_format:"%B, %a %e, %I:%M:(%S) %p"}
+		                                </a> 
+		                            </li>
+	                             {/foreach} -->
+
+						 <div class="btn-group">
+	                        <a href="#" title="Messages" id="messages" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+	                            <i class="fa fa-clock-o"></i>
+	                        </a>
+	                        <ul class="dropdown-menu versions" role="menu">
+	                        	<li class="dropdown-header"> <i class="fa fa-clock-o"></i>
+	                        	Version History <i class="fa fa-code"></i></li>
+	                        	<li class="divider"></li>
+	                        	{foreach $versions as $year => $months}
+	                             	{if $year != ''}
+	                             		<li class="dropdown-leftsubmenu" >
+			                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">  
+			                                <i class="fa fa-calendar-o"></i> {$year}
+			                                </a> 
+			                                <ul class="dropdown-menu">
+		                                    	<li class="dropdown-header"> <i class="fa fa-calendar-o"></i>
+                        						Year {$year} <i class="fa fa-moon-o"></i></li>
+                        						<li class="divider"></li>
+			                                    {foreach $months as $month => $days} 
+					                             	{if $month != ''} 
+						                             	<li class="dropdown-leftsubmenu">
+							                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+							                                <i class="fa fa-moon-o"></i> {$month} 
+							                                </a> 
+							                                <ul class="dropdown-menu">
+							                                <li class="dropdown-header"> <i class="fa fa-moon-o"></i>
+			                        						Month of {$month} <i class="fa fa-sun-o"></i></li>
+			                        						<li class="divider"></li>
+						                                    {foreach $days as $day => $hours}
+								                             	<li class="dropdown-leftsubmenu">
+									                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" > 
+									                                <i class="fa fa-sun-o"></i>    {$day} 
+									                                </a> 
+									                                <ul  class="dropdown-menu">
+									                                	<li class="dropdown-header"> <i class="fa fa-sun-o"></i>
+						                        						{$day} <i class="fa fa-clock-o"></i></li>
+						                        						<li class="divider"></li>
+								                                    	{foreach $hours as $hour => $mintues}
+										                             	<li class="dropdown-leftsubmenu" role="presentation">
+											                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+											                                 <i class="fa fa-clock-o
+											                                 {if $hour > 11}
+											                                 	fa-rotate-90
+											                                 {elseif $hour > 8}
+											                                 	 fa-rotate-45
+											                                 {elseif $hour > 5}
+											                                 	fa-rotate-270
+											                                 {elseif $hour > 2}
+											                                 	fa-rotate-180
+											                                 {/if}
+
+											                                 "></i> {$hour|replace:'_':"'oClock"} 
+											                                    
+											                                </a> 
+											                                <ul  class="dropdown-menu">
+											                                	<li class="dropdown-header"> <i class="fa fa-clock-o"></i>
+			                        						  					{$hour|replace:'_':": 00"}
+			                        						  					<i class="fa fa-bookmark-o"></i></li>
+										                                    	{foreach $mintues as $min => $seconds}
+												                             	<li class="dropdown-leftsubmenu" >
+													                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+													                                 <i class="fa fa-bookmark-o"></i>  {$min} 
+													                                </a> 
+													                                <ul class="dropdown-menu">
+													                                	<li class="dropdown-header"> <i class="fa fa-bookmark-o"></i>
+					                        						  					{$hour|replace:'_':": 00"}
+					                        						  					<i class="fa fa-history  {if $hour > 11}
+														                                 	fa-rotate-90
+														                                 {elseif $hour > 8}
+														                                 	 fa-rotate-45
+														                                 {elseif $hour > 5}
+														                                 	fa-rotate-270
+														                                 {elseif $hour > 2}
+														                                 	fa-rotate-180
+														                                 {/if}"></i></li>
+												                                   		 {foreach $seconds as $sec => $v}
+															                             	<li >
+																                                <a href="#" onclick="window.meshTimeLoad('{$v}');"  >
+																                                     <i class="fa fa-crosshairs fa-spin"></i>
+																                                    {$sec}
+																                                </a> 
+																                            </li>
+														                            {/foreach}
+												                                   	</ul>
+													                            </li>
+												                            {/foreach}
+										                                    </ul>
+											                            </li>
+										                            {/foreach}
+								                                    </ul>
+									                            </li>
+								                            {/foreach}
+								                            </ul>
+							                            </li>
+					                             	{/if}
+					                            {/foreach}
+				                            </ul>
+			                            </li>
+	                             	{/if}
+	                             {/foreach}
+
+	                        </ul>
+	                    </div>
+
 						<button type="submit" class="edit-submit btn btn-success " value="">
 						 <!-- <i class="fa fa-gear fa-floppy-o"></i> -->
 						 <i class="fa fa-arrow-left"></i> </button> 
@@ -107,22 +222,7 @@
 				          	{include file="~blox/clock.tpl"}
 				        </a>
 
-				         <div class="btn-group">
-	                        <a href="#" title="Messages" id="messages" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-	                            <i class="fa fa-clock-o"></i>
-	                        </a>
-	                        <ul id="messages-menu" class="dropdown-menu messages" role="menu">
-	                        	<!-- <li class="dropdown-header"> <i class="fa fa-globe"></i> {$SVR['SERVER_NAME']} Vitals <i class="fa fa-stethoscope"></i></li>
-	                        	<li class="divider"></li> -->
-	                             {foreach $timestamps as $time => $stamp}
-	                             	<li role="presentation">
-		                                <a href="#" onclick="window.meshTimeLoad('{$stamp.cfg_timestamp}')" class="message">
-		                                    {$stamp.cfg_timestamp|date_format:"%B, %a %e, %I:%M:(%S) %p"}
-		                                 </a> 
-		                            </li>
-	                             {/foreach}
-	                        </ul>
-	                    </div>
+				        
 
 
 			          </div>
