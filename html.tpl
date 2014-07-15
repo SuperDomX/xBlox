@@ -100,13 +100,23 @@
 		                                </a> 
 		                            </li>
 	                             {/foreach} -->
+	                     <button class="btn btn-warning active" onclick="window.meshReset();">
+							    <i class="fa fa-pause "></i> 
+						</button>
+
+						<button class="btn btn-danger ">
+							<i class="fa fa-eject "></i> 
+						</button>
+				        <a   class="btn btn-default active disabled " >
+				          	{include file="~blox/clock.tpl"}
+				        </a>
 
 						 <div class="btn-group">
 	                        <a href="#" title="Messages" id="messages" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-	                            <i class="fa fa-clock-o"></i>
+	                            <i class="fa fa-backward"></i>
 	                        </a>
 	                        <ul class="dropdown-menu versions" role="menu">
-	                        	<li class="dropdown-header"> <i class="fa fa-clock-o"></i>
+	                        	<li class="dropdown-header"> <i class="fa fa-backward"></i>
 	                        	Version History <i class="fa fa-code"></i></li>
 	                        	<li class="divider"></li>
 	                        	{foreach $versions as $year => $months}
@@ -139,24 +149,24 @@
 						                        						{$day} <i class="fa fa-clock-o"></i></li>
 						                        						<li class="divider"></li>
 								                                    	{foreach $hours as $hour => $mintues}
-										                             	<li class="dropdown-leftsubmenu" role="presentation">
-											                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-											                                 <i class="fa fa-clock-o
-											                                 {if $hour > 11}
-											                                 	fa-rotate-90
+
+								                                    		 {if $hour > 11}
+											                                 	{assign var="rotate" value="90"}
 											                                 {elseif $hour > 8}
-											                                 	 fa-rotate-45
+											                                 	{assign var="rotate" value="45"}
 											                                 {elseif $hour > 5}
-											                                 	fa-rotate-270
+											                                 	{assign var="rotate" value="270"}
 											                                 {elseif $hour > 2}
-											                                 	fa-rotate-180
+											                                 	{assign var="rotate" value="180"}
 											                                 {/if}
 
-											                                 "></i> {$hour|replace:'_':"'oClock"} 
+										                             	<li class="dropdown-leftsubmenu" role="presentation">
+											                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+											                                 <i class="fa fa-clock-o fa-rotate-{$rotate}"></i> {$hour|replace:'_':"'oClock"} 
 											                                    
 											                                </a> 
 											                                <ul  class="dropdown-menu">
-											                                	<li class="dropdown-header"> <i class="fa fa-clock-o"></i>
+											                                	<li class="dropdown-header"> <i class="fa fa-clock-o fa-rotate-{$rotate}"></i>
 			                        						  					{$hour|replace:'_':": 00"}
 			                        						  					<i class="fa fa-bookmark-o"></i></li>
 										                                    	{foreach $mintues as $min => $seconds}
@@ -167,15 +177,7 @@
 													                                <ul class="dropdown-menu">
 													                                	<li class="dropdown-header"> <i class="fa fa-bookmark-o"></i>
 					                        						  					{$hour|replace:'_':": 00"}
-					                        						  					<i class="fa fa-history  {if $hour > 11}
-														                                 	fa-rotate-90
-														                                 {elseif $hour > 8}
-														                                 	 fa-rotate-45
-														                                 {elseif $hour > 5}
-														                                 	fa-rotate-270
-														                                 {elseif $hour > 2}
-														                                 	fa-rotate-180
-														                                 {/if}"></i></li>
+					                        						  					<i class="fa fa-history fa-rotate-{$rotate}"></i></li>
 												                                   		 {foreach $seconds as $sec => $v}
 															                             	<li >
 																                                <a href="#" onclick="window.meshTimeLoad('{$v}');"  >
@@ -205,33 +207,33 @@
 	                        </ul>
 	                    </div>
 
-						<button type="submit" class="edit-submit btn btn-success " value="">
-						 <!-- <i class="fa fa-gear fa-floppy-o"></i> -->
-						 <i class="fa fa-arrow-left"></i> </button> 
+	                    
+						
+						
+						 
 						<!-- <button class="btn btn-warning  "><i class="fa fa-image "> Image</i></button>
 						<button class="btn btn-warning  "><i class="fa fa-paragraph "> Paragraph</i></button>
 						<button class="btn btn-warning  "><i class="fa fa-html5 "></i></button>
 						<button class="btn btn-warning  "><i class="fa fa-html5 "></i></button>
 						<button class="btn btn-warning  "><i class="fa fa-html5 "></i></button> -->
 						
-
-						<button class="btn btn-warning active ">
-							<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-jsfiddle "></i> [mesh] <i class="fa fa-gear fa-spin"></i> 
-						</button>
-				        <a   class="btn btn-default active disabled " >
-				          	{include file="~blox/clock.tpl"}
-				        </a>
-
 				        
+						
+						
+	                    <button type="submit" class="edit-submit btn btn-success " value="">
+	                    	<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-play"></i> <i class="fa fa-gear fa-spin"></i> 
+						</button> 
+						
 
 
 			          </div>
 
 			          <div class="nav navbar-nav navbar-right btn-group blox-bar-btns" style="margin-top: 5px;">
 
-							<a class="btn btn-danger btn-lg"  onclick="bloxSwitch(false);"><i class="fa fa-eye-slash"></i></a>
+							<a class="btn btn-primary btn-lg"  onclick="bloxSwitch(false);"><i class="fa fa-user-md"></i></a>
+							<a class="btn btn-primary btn-lg"  onclick="bloxSwitch(false);"><i class="fa fa-medkit"></i></a>
 							
-							<a class="btn btn-success active disabled btn-lg" onclick="bloxSwitch(true);"><i class="fa fa-eye"></i></a>
+							<!-- <a class="btn btn-success active disabled btn-lg" onclick="bloxSwitch(true);"><i class="fa fa-eye"></i></a> -->
 			          	
 			          </div>
 
@@ -258,6 +260,11 @@
 
 
 	    });
+
+	    window.meshReset = function  () {
+	    	$('.{$method}-blox').removeClass('flip');
+			$('.{$method}-blox').parent().removeClass('fullscreen-me');  
+	    }
 
 	    window.meshOnLoad = function  () {
 	    	$.ajax({
