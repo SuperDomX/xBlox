@@ -36,7 +36,7 @@
 	-->
 	
 	<div class="front">
-		<a class="action btn btn-warning btn-block"><i class="fa fa-gear fa-spin"></i><i class="fa fa-gear fa-spin-reverse"></i></a>
+		<a class="action btn btn-info btn-block"><i class="fa fa-gear fa-spin"></i> <i class="fa fa-forward"></i> <i class="fa fa-gear fa-spin-reverse"></i></a>
 	{/if}
 		<div id="mesh-source-{$bloxid}" class="content"> 
 			<style type="text/css">
@@ -174,7 +174,7 @@
 												                                   		 {foreach $seconds as $sec => $v}
 															                             	<li >
 																                                <a href="#" onclick="window.meshTimeLoad('{$v}');"  >
-																                                     <i class="fa fa-crosshairs fa-spin"></i>
+																                                     <i class="fa fa-crosshairs fa-spin-reverse"></i>
 																                                    {$sec}
 																                                </a> 
 																                            </li>
@@ -255,8 +255,8 @@
 		                                    			<td>
 		                                    				
 		                                    				<div class="progress"> 
-										                       <div class="progress-bar progress-bar-striped active progress-bar-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-										                            HP  90%
+										                       <div class="pull-left progress-bar progress-bar-striped active progress-bar-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+										                            90% HP
 										                       </div>  
 										                    </div>
 
@@ -278,8 +278,8 @@
 		                                    				
 		                                    				<div  >
 						                                        <div class="progress"> 
-											                       <div class="progress-bar progress-bar-striped progress-bar-info active " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-											                            EP <i class="fa   fa-envelope"></i> 60%
+											                       <div class="pull-left progress-bar progress-bar-striped progress-bar-info active " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+											                            60% EP 
 											                       </div>  
 											                    </div>
 						                                    </div>
@@ -302,8 +302,8 @@
 		                                    				
 		                                    				<div  >
 						                                        <div class="progress"> 
-											                       <div class="progress-bar progress-bar-striped active progress-bar-success" role="progressbar" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100" style="width: 97%;">
-											                             MP  <i class="fa   fa-magic  "></i> 97%
+											                       <div class="pull-left progress-bar progress-bar-striped active progress-bar-success" role="progressbar" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100" style="width: 97%;">
+											                             97% MP  
 											                       </div>  
 											                    </div>
 						                                    </div>
@@ -327,8 +327,8 @@
 		                                    				
 		                                    				<div  >
 						                                        <div class="progress"> 
-											                       <div class="progress-bar progress-bar-striped active progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-											                            SP <i class="fa   fa-star"></i> 60%
+											                       <div class="pull-left progress-bar progress-bar-striped active progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+											                            60% SP
 											                       </div>  
 											                    </div>
 						                                    </div>
