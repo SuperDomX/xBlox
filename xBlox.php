@@ -43,7 +43,8 @@
 				'blox_blox' => array(
 					'quest_id'  	=> array('Type'=>'int(8)'),
 					'cfg_option'	=> array('Type'=>'varchar(50)'),
-					'cfg_params'	=> array('Type'=>'blob')
+					'cfg_params'	=> array('Type'=>'blob'),
+					'cfg_timestamp' => array('Type'=>'TIMESTAMP','Default'=>'CURRENT_TIMESTAMP') 
 				)
 			);
 		}
@@ -542,6 +543,25 @@ $blox 	= $q->Select('*','blox_quest',array(
 			# code...
 		}
 
+
+		public function save($quest=0)
+		{
+			$q = $this->q();
+			if ( $this->Key['is']['admin'] && isset($_POST['blox']) ) {
+				$blox = $_POST['blox'];
+
+				foreach ($blox as $key => $value) {
+					$q->Insert('blox_blox', $value);
+				}
+
+				return array(
+					'success' => (empty($q->error)),
+					'error'   => $q->error,
+					'post' 	  => $_POST
+				); 
+			}
+		}
+
 		/**
 			@name html
 			@blox [mesh]
@@ -552,41 +572,52 @@ $blox 	= $q->Select('*','blox_quest',array(
 		{
 			$q = $this->q();
 
-			$b = $q->Select('*','blox_blox',array(
-				'quest_id'=> $id
+			
+			// var_dump($q->error);
+			// exit;
+			// Select all blox that have been setup on this quest/pages
+			$q->mBy['cfg_timestamp'] = 'DESC';  
+			$js = $q->Select('*','blox_blox',array(
+				'quest_id'   => $id,
+				'cfg_option' => 'js-source',
 			));
 
+			$q->mBy['cfg_timestamp'] = 'DESC'; 
+			$css = $q->Select('*','blox_blox',array(
+				'quest_id'   => $id,
+				'cfg_option' => 'css-source',
+			));
 
+			$q->mBy['cfg_timestamp'] = 'DESC'; 
+			$html = $q->Select('*','blox_blox',array(
+				'quest_id'   => $id,
+				'cfg_option' => 'html-source',
+			));
+ 
 
-			if ( $this->Key['is']['admin'] && isset($_POST['blox']) ) {
-				$blox = $_POST['blox'];
-
-				if(empty($b)){
-					$id = $q->Insert('blox_blox', $blox);
-				}else{
-					$q->Update('blox_blox', $blox, array(
-						'id' => $b[0]['id']
-					));
-				} 
-
-				return array(
-					'success' => (empty($q->error)),
-					'error'   => $q->error,
-					'post' 	  => $_POST
-				);
-
-			}else{
-				if(!empty($b)){
-					$this->set('blox_cfg',$b[0]);
-				} 
-			}
+			$this->set('blox_cfg',array(
+				'css'  => $css[0]['cfg_params'],
+				'html' => $html[0]['cfg_params'],
+				'js'   => $js[0]['cfg_params']
+			));
  
  			$this->set('bloxid',$id);
 
+ 			$this->set('timestamps',$q->Select(
+ 				'cfg_timestamp',
+ 				'blox_blox',
+ 				array(
+ 					'quest_id' => $id
+ 				),
+ 				'LEFT',
+ 				'=',
+ 				'AND',
+ 				'cfg_timestamp'
+ 			));
+
  			return array(
 				'success' => (empty($q->error)),
-				'error'   => $q->error,
-				'post' 	  => $_POST
+				'error'   => $q->error 
 			);
 
 		}

@@ -36,10 +36,18 @@
 	-->
 	
 	<div class="front">
-		<a class="action btn btn-warning btn-block"><i class="fa fa-jsfiddle"></i></a>
+		<a class="action btn btn-warning btn-block"><i class="fa fa-gear fa-spin"></i><i class="fa fa-gear fa-spin-reverse"></i></a>
 	{/if}
-		<div id="html5-source-{$bloxid}" class="content">
-			{$blox_cfg.cfg_params}
+		<div id="mesh-source-{$bloxid}" class="content"> 
+			<style type="text/css">
+				{$blox_cfg.css}
+			</style>
+
+			{$blox_cfg.html}
+
+			<script type="text/javascript">
+				{$blox_cfg.js}
+			</script> 
 		</div>
 	{if $masterKey.is.admin}
 	</div>
@@ -95,9 +103,27 @@
 						<button class="btn btn-warning active ">
 							<i class="fa fa-gear fa-spin-reverse"></i> <i class="fa fa-jsfiddle "></i> [mesh] <i class="fa fa-gear fa-spin"></i> 
 						</button>
-				         <a   class="btn btn-default active disabled " >
+				        <a   class="btn btn-default active disabled " >
 				          	{include file="~blox/clock.tpl"}
 				        </a>
+
+				         <div class="btn-group">
+	                        <a href="#" title="Messages" id="messages" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+	                            <i class="fa fa-clock-o"></i>
+	                        </a>
+	                        <ul id="messages-menu" class="dropdown-menu messages" role="menu">
+	                        	<!-- <li class="dropdown-header"> <i class="fa fa-globe"></i> {$SVR['SERVER_NAME']} Vitals <i class="fa fa-stethoscope"></i></li>
+	                        	<li class="divider"></li> -->
+	                             {foreach $timestamps as $time => $stamp}
+	                             	<li role="presentation">
+		                                <a href="#" class="message">
+		                                    {$stamp.cfg_timestamp}
+		                                 </a> 
+		                            </li>
+	                             {/foreach}
+	                        </ul>
+	                    </div>
+
 
 			          </div>
 
@@ -113,7 +139,7 @@
 				</div><!--/.nav-collapse -->
 			</div> 
 		</div>  
-		<iframe width="100%" height="99.75%" border="0" style="border: 0; overflow: hidden;" src="/{$toBackDoor}/{$suite}/x{$Xtra|ucfirst}/mesh-code-editor/index.html"> 
+		<iframe id="mesh-code-editor" width="100%" height="100%" border="0" style="border: 0; overflow: hidden;" src="about:blank"> 
 		</iframe> 
 	</div>
 
@@ -122,23 +148,73 @@
 	    $('.{$method}-blox .action').click(function(){ 
 	      $('.{$method}-blox').addClass('flip');
 	      $('.{$method}-blox').parent().addClass('fullscreen-me');
-	      
+	      $('#mesh-code-editor').attr({
+	      		src : '/{$toBackDoor}/{$suite}/x{$Xtra|ucfirst}/mesh-code-editor/index.html'
+	      });
 	    });
-	    $('.{$method}-blox .edit-submit').click(function(e){ 
-	      
-			$('.{$method}-blox').removeClass('flip');
 
+	    window.meshOnLoad = function  () {
+	    	var i = $('#mesh-code-editor')[0].contentWindow;
+	    	var html   =	i.htmlBox.setValue('{$blox_cfg.html|strip|escape:"htmlall"}');
+	    	var css    =	i.cssBox.setValue('{$blox_cfg.css|strip|escape:"htmlall"}');
+	    	var js     =	i.jsBox.setValue('{$blox_cfg.js|strip|escape:"htmlall"}');
+	    }
+
+	    $('.{$method}-blox .edit-submit').click(function(e){ 
+
+	    	var content = $('.{$method}-blox .front .content');
+
+	    	var i = $('#mesh-code-editor')[0].contentWindow;
+	    	var html   =	i.htmlBox.getValue();
+	    	var css    =	i.cssBox.getValue();
+	    	var js     =	i.jsBox.getValue();
+
+	    	var s = document.createElement('script');
+	    	s.innerHTML = js;
+
+	    	var c = document.createElement('style');
+	    	c.innerHTML = css;
+
+			content.html(html);
+			content.append(c);
+			content.append(s);
+
+			$('.{$method}-blox').removeClass('flip');
 			$('.{$method}-blox').parent().removeClass('fullscreen-me'); 
 
-			// why not update that list for fun?
-			$('.{$method}-blox .front .content').html(
-				tinymce.get('html5-source').getContent()
-			);
-	      
-			// $('#o-blox-{$o.blox}-{$o.id}').load('/html/{$o.blox|substr:1|strtolower|replace:'-':'/'}', function  () {
-			// });
+			$.ajax({
+	    		url 	 : "/{$toBackDoor}/{$Xtra}/save/{$bloxid}/.json",
+	    		type     : "POST",	
+				data     : {
+					blox : {
+						js : {
+							quest_id : {$bloxid},
+							cfg_option : 'js-source',
+							cfg_params : js
+						},
+						css : {
+							quest_id : {$bloxid},
+							cfg_option : 'css-source',
+							cfg_params : css
+						},
+						html : {
+							quest_id : {$bloxid},
+							cfg_option : 'html-source',
+							cfg_params : html
+						}
+					} 
+				},
+				dataType : "json",
+			    success: function(data){ 
+					if(data.success){
+						console.log("Saved");
+					}else{
+						alert(data.error);
+					}
+			    }
+	    	}); 
 
-	      e.preventDefault();
+	      	e.preventDefault();
 	    });
 	</script>
 	
