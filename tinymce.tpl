@@ -1,4 +1,6 @@
-<div id="tinymce-source-{$bloxid}" class="content">
+<div>
+	
+<div id="tinymce-source-{$bloxid}" class="content tinymce_editor">
 	{$blox_cfg.cfg_params}
 </div>
 {if $masterKey.is.admin}   
@@ -41,7 +43,7 @@
  	<script src="/bin/js/tinymce/tinymce.min.js"></script>
 	<script type="text/javascript">
 		tinymce.init({
-			selector : "#tinymce-source-{$bloxid}",
+			selector : ".tinymce_editor",
 			inline   : true,
 			
 		    save_enablewhendirty: true,
@@ -92,3 +94,5 @@
 		}); 
 	</script> 
 {/if}
+
+</div>

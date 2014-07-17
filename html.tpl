@@ -39,20 +39,44 @@
 	{include file="~blox/clock.tpl" assign=clock} 
 	
 	<div class="front">
-		<a class="action btn btn-lg btn-info btn-block"><i class="fa fa-gear fa-spin"></i> <i class="fa fa-forward"> <i class="fa fa-gear fa-spin-reverse"></i> </i> </a>
+		<a class="action btn btn-lg btn-warning" style="right: 40%; left: 40%; z-index: 1;">
+			<!-- <i class="fa fa-play"> </i> -->
+			
+			<i class="fa fa-cube fa-spin"> </i>
+			
+			<i class="fa fa-css3"> </i> 
+			<i class="fa fa-html5"> </i> 
+
+			<i class="fa fa-coffee"> </i>
+			<i class="fa fa-code"> </i>
+
+			<span class="fa fa-spin-reverse">
+			<i class="fa fa-gear fa-spin-reverse"></i><i class="fa fa-gear fa-spin-slow"></i> 
+		</span> 
+			<!-- <i class="fa fa-"> </i> -->
+<!-- 
+			<i class="fa fa-forward"> </i>
+			<i class="fa fa-fast-forward"> </i>
+			<i class="fa fa-eject"> </i>
+			<i class="fa fa-circle"> </i> -->
+		 </a>
 	{/if}
 		<div id="mesh-source-{$bloxid}" class="content"> 
 			<style type="text/css">
 				{$blox_cfg.css}
 			</style>
 
-			{$blox_cfg.html}
+			<div class="tinymce_editor" id="mesh-source-{$bloxid}-html-edtior">{$blox_cfg.html}</div>
+
+			
 
 			<script type="text/javascript">
 				{$blox_cfg.js}
 			</script> 
 		</div>
+
 	{if $masterKey.is.admin}
+
 	</div>
  
  	
@@ -540,6 +564,9 @@
 
 	    	var content = $('.{$method}-blox-{$bloxid} .front .content');
 
+	    	var editor = tinyMCE.get('mesh-source-{$bloxid}-html-edtior');
+
+
 	    	var i = $('#mesh-code-editor')[0].contentWindow;
 	    	var html   =	i.htmlBox.getValue();
 	    	var css    =	i.cssBox.getValue();
@@ -551,13 +578,19 @@
 	    	var c = document.createElement('style');
 	    	c.innerHTML = css;
 
-			content.html(html);
+			//content.html(html);
+
+			editor.setContent(html);
+
+			$('.html-blox-4 .front .content style').remove();
+			$('.html-blox-4 .front .content script').remove();
+
 			content.append(c);
 			content.append(s);
 
-			$('.{$method}-blox-{$bloxid}').removeClass('flip');
-			$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me'); 
+			$("head").append("<style type='text/css'>"+css+"</style>");
 
+			
 			$.ajax({
 	    		url 	 : "/{$toBackDoor}/{$Xtra}/save/{$bloxid}/.json",
 	    		type     : "POST",	
@@ -584,6 +617,9 @@
 			    success: function(data){ 
 					if(data.success){
 						console.log("Saved");
+						$('.{$method}-blox-{$bloxid}').removeClass('flip');
+						$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me'); 
+
 					}else{
 						alert(data.error);
 					}
@@ -626,8 +662,8 @@
 
 	  /* -- make sure to declare a default for every property that you want animated -- */
 	  /* -- general styles, including Y axis rotation -- */
-	.{$method}-blox-{$bloxid} .front a{
-		position           : absolute;
+	.{$method}-blox-{$bloxid} .front a.action{
+		position           : fixed !important;
 		top                : -55px;  
 		left               : 0px;
 		/* -- transition is the magic sauce for animation -- */
@@ -635,7 +671,7 @@
 		transition         : all .3s linear;
 	}
 
-	.{$method}-blox-{$bloxid} .front:hover a{
+	.{$method}-blox-{$bloxid} .front:hover a.action{
 		top: 0px;
 		left: 0px;
 	}
@@ -775,7 +811,115 @@
                     7..........                         
                         .....: 7   
 	-->
+	<script src="/bin/js/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript">
+		tinymce.init({
+			selector : ".tinymce_editor",
+			inline   : true,
+			
+		    save_enablewhendirty: true,
+		    save_onsavecallback: function() { 
+		    	var html = tinymce.get('mesh-source-{$bloxid}-html-edtior').save(); 
+		    	//$('#mesh-code-editor')[0].contentWindow.htmlBox.setValue(s);
 
+				console.log("Saving HTML..."); 
+		    	$.ajax({
+		    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
+		    		type     : "GET",	 
+					dataType : "json",
+				    success: function(data){  
+						console.log("Loading Latest CSS & JS HTML..."); 
+						if(data.success){
+					    	$.ajax({
+								url 	 : "/{$toBackDoor}/{$Xtra}/save/{$bloxid}/.json",
+								type     : "POST",	
+								data     : {
+									blox : {
+										js : {
+											quest_id : {$bloxid},
+											cfg_option : 'js-source',
+											cfg_params : data.js
+										},
+										css : {
+											quest_id : {$bloxid},
+											cfg_option : 'css-source',
+											cfg_params : data.css
+										},
+										html : {
+											quest_id : {$bloxid},
+											cfg_option : 'html-source',
+											cfg_params : html
+										}
+									} 
+								},
+								dataType : "json",
+							    success: function(data){ 
+									if(data.success){
+										console.log("Saved");
+										$('.{$method}-blox-{$bloxid}').removeClass('flip');
+										$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me'); 
+
+									}else{
+										alert(data.error);
+									}
+							    }
+							}); 
+
+
+
+						}else{
+							alert(data.error);
+						}
+				    }
+		    	}); 
+
+				
+
+		   //  	console.log("Saving");
+		   //  	$.ajax({
+		   //  		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
+		   //  		type     : "POST",	
+					// data     : {
+					// 	blox : {
+					// 		quest_id : {$bloxid},
+					// 		cfg_option : 'html-source',
+					// 		cfg_params : s
+					// 	} 
+					// },
+					// dataType : "json",
+				 //    success: function(data){ 
+					// 	if(data.success){
+					// 		console.log("Saved");
+					// 	}else{
+					// 		alert(data.error);
+					// 	}
+				 //    }
+		   //  	}); 
+		    },
+			plugins: [
+		        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+		        "searchreplace wordcount visualblocks visualchars code fullscreen",
+		        "insertdatetime media nonbreaking save table contextmenu directionality",
+		        "emoticons template paste textcolor colorpicker textpattern save"
+		    ],
+			toolbar: "save | insertfile undo redo | styleselect |  alignleft aligncenter alignright alignjustify  | forecolor backcolor  |  bold italic | bullist numlist outdent indent | link image media | charmap table insertdatetime  | template print code",
+		    
+		     
+		    image_advtab: true,
+		    apply_source_formatting : true,
+		    content_css : "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css,//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css",
+			templates: [
+				{include file="../../html/templates/jumbotron.tpl" assign=jumbotron}
+		        { title: 'Jumbotron', content: '{$jumbotron|strip}' },
+
+		        {include file="../../html/templates/3-col.tpl" assign=3col}
+		        { title: '3 Columns', content: '{$3col|strip}' },
+
+		        {include file="../../html/templates/cover.tpl" assign=cover}
+		        { title: 'Cover', content: '{$cover|strip}' }
+			]
+		}); 
+	</script> 
 	{/if}
 
 

@@ -564,9 +564,9 @@ $blox 	= $q->Select('*','blox_quest',array(
 
 		/**
 			@name html
-			@blox [mesh]
-			@desc Simple Easy to use Custom Code Blox
-			@icon jsfiddle
+			@blox [Meshette]
+			@desc All-in-One WysiWyg for HTML,CSS, & JS
+			@icon fire
 		**/
 		public function html($id=0,$time=null)
 		{

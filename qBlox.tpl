@@ -43,7 +43,7 @@
 
 		padding-top: -50px;
 		overflow: hidden;
-		color:  #ccc !important;
+		color:  #222 !important;
 	}
 
 
