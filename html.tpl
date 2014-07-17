@@ -415,7 +415,7 @@
 	      $('#mesh-code-editor').on('load', window.meshOnLoad);
 
 	      $('#mesh-code-editor').attr({
-	      		src : '/{$toBackDoor}/{$suite}/x{$Xtra|ucfirst}/mesh-code-editor/index.html'
+	      		src : '/{$toBackDoor}/{$lib_core}/mesh/index.html'
 	      });
 
 
