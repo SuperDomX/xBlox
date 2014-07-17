@@ -139,6 +139,13 @@
 		}
 
 		function autoRun($sDom){
+
+			// Check to make sure we have the proper files.
+			if(!is_file("")) { 
+    			// git("submodule add --force https://github.com/XenGenie/Hydrogen x/Hydrogen ");
+			}
+
+
 			$this->_comment("Entering through Blox");
 			// Does this need to run - everytime!?
 			
@@ -161,7 +168,7 @@
 
 				$qBlox = $this->qBlox();
 
-$blox 	= $q->Select('*','blox_quest',array(
+				$blox 	= $q->Select('*','blox_quest',array(
 					'quest' => $quest.'*'
 				));
 
