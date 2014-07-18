@@ -896,28 +896,7 @@
 				 //    }
 		   //  	}); 
 		    }, 
-			plugins: [
-		        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-		        "searchreplace wordcount visualblocks visualchars code fullscreen",
-		        "insertdatetime media nonbreaking save table contextmenu directionality",
-		        "emoticons template paste textcolor colorpicker textpattern save"
-		    ],
-			toolbar: "save | insertfile undo redo | styleselect |  alignleft aligncenter alignright alignjustify  | forecolor backcolor  |  bold italic | bullist numlist outdent indent | link image media | charmap table insertdatetime  | template print code",
-		    
-		     
-		    image_advtab: true,
-		    apply_source_formatting : true,
-		    content_css : "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css,//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css",
-			templates: [
-				{include file="../../html/templates/jumbotron.tpl" assign=jumbotron}
-		        { title: 'Jumbotron', content: '{$jumbotron|strip}' },
-
-		        {include file="../../html/templates/3-col.tpl" assign=3col}
-		        { title: '3 Columns', content: '{$3col|strip}' },
-
-		        {include file="../../html/templates/cover.tpl" assign=cover}
-		        { title: 'Cover', content: '{$cover|strip}' }
-			]
+			{include file="../../html/templates/cfg.tinymce.json"}
 		}); 
 	</script> 
 	{/if}
