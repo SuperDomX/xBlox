@@ -37,7 +37,7 @@
 	{include file="~blox/clock.tpl" assign=clock} 
 	
 	<div class="front">
-		<menu class="" style="right: 40%; left: 40%; z-index: 1; position: fixed;">
+		<menu class="" style="  z-index: 1; position: fixed;">
 			<div class="btn-group">
 				<!-- <div class="btn btn-default active btn-lg">
 					<i class="fa fa-cube fa-spin"> </i>
@@ -94,7 +94,7 @@
 
 	<div class="back" style="overflow: hidden;">
 		<!-- Fixed navbar -->
-		<div class="navbar navbar-default navbar-fixed-top navbar-inverse godbar" style="z-index: 99;"  role="navigation">
+		<div class="navbar navbar-default navbar-fixed-top navbar-inverse" style="z-index: 99;"  role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -418,15 +418,17 @@
 	<script type="text/javascript">
 	  // set up block configuration
 	    $('.{$method}-blox-{$bloxid} .action').click(function(){ 
-	      $('.{$method}-blox-{$bloxid}').addClass('flip');
-	      $('.{$method}-blox-{$bloxid}').parent().addClass('fullscreen-me');
 
+	    	$('.{$method}-blox-{$bloxid}').addClass('flip');
+	      	$('.{$method}-blox-{$bloxid} .back div:first-child.navbar').addClass('godbar');
 
-	      $('#mesh-code-editor').on('load', window.meshOnLoad);
+	      	$('.{$method}-blox-{$bloxid}').parent().addClass('fullscreen-me');
 
-	      $('#mesh-code-editor').attr({
-	      		src : '/{$toBackDoor}/{$lib_core}/mesh/index.html'
-	      });
+	      	$('#mesh-code-editor').on('load', window.meshOnLoad);
+
+			$('#mesh-code-editor').attr({
+					src : '/{$toBackDoor}/{$lib_core}/mesh/index.html'
+			});
 
 
 	    });
@@ -520,9 +522,12 @@
 	    	eject : function () { 
 		    	$('.{$method}-blox-{$bloxid}').removeClass('flip');
 				$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me');  
+
+	    		$('.{$method}-blox-{$bloxid} .back div:first-child.navbar').removeClass('godbar');
+				
 				$('#mesh-code-editor').attr({
 			      		src : 'about:blank'
-			      });
+			    });
 	    	}
 
 	    };
@@ -572,8 +577,10 @@
 	    	}); 
 	    }
 
-
+	    // BackPanel
 	    $('.{$method}-blox-{$bloxid} .edit-submit').click(function(e){ 
+
+	    	$('.{$method}-blox-{$bloxid} .back div:first-child.navbar').removeClass('godbar');
 
 	    	var content = $('.{$method}-blox-{$bloxid} .front .content');
 
@@ -732,53 +739,53 @@
 	  }
 
 		.{$method}-blox-{$bloxid} .back { 
-		float                       : none;
-		position                    : absolute;
-		top                         : 0;
-		left                        : 0;
-		z-index                     : 800;
-		width                       : 100%;
-		height                      : 100%; 
-		/*background                : #333;*/ 
-		
-			padding-top: 55px;
-		-webkit-transform           : rotateY(-180deg);
-		-moz-transform              : rotateY(-179deg); /* setting to 180 causes an unnatural-looking half-flip */
-		transform                   : rotateY(-179deg);
+			float                       : none;
+			position                    : absolute;
+			top                         : 0;
+			left                        : 0;
+			z-index                     : 800;
+			width                       : 100%;
+			height                      : 100%; 
+			/*background                : #333;*/ 
+			
+				padding-top: 55px;
+			-webkit-transform           : rotateY(-180deg);
+			-moz-transform              : rotateY(-179deg); /* setting to 180 causes an unnatural-looking half-flip */
+			transform                   : rotateY(-179deg);
 
-		-webkit-transform-style     : preserve-3d;
-		-moz-transform-style        : preserve-3d;
-		transform-style             : preserve-3d;
+			-webkit-transform-style     : preserve-3d;
+			-moz-transform-style        : preserve-3d;
+			transform-style             : preserve-3d;
 
-		-webkit-backface-visibility : hidden;
-		-moz-backface-visibility    : hidden;
-		backface-visibility         : hidden;
+			-webkit-backface-visibility : hidden;
+			-moz-backface-visibility    : hidden;
+			backface-visibility         : hidden;
 
-		/* -- transition is the magic sauce for animation -- */
-		-webkit-transition          : all .4s ease-in-out;
-		transition                  : all .4s ease-in-out;
+			/* -- transition is the magic sauce for animation -- */
+			-webkit-transition          : all .4s ease-in-out;
+			transition                  : all .4s ease-in-out;
 
-	visibility: hidden;
+			visibility: hidden;
 		}
 
 	  .{$method}-blox-{$bloxid}.flip .back { 
 		z-index           : 1000;
 		/*background      : #80868d;*/
-		 visibility: visible;
+		visibility: visible;
 		/*padding-top       : 50px;*/
 		-webkit-transform : rotateX(0deg) rotateY(0deg);
 		-moz-transform    : rotateX(0deg) rotateY(0deg);
 		transform         : rotateX(0deg) rotateY(0deg);
 		
-	background: rgb(255,123,13);
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmZjdiMGQiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmZmE4NGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-	background: -moz-linear-gradient(left,  rgba(255,123,13,1) 50%, rgba(255,168,76,1) 50%);
-	background: -webkit-gradient(linear, left top, right top, color-stop(50%,rgba(255,123,13,1)), color-stop(50%,rgba(255,168,76,1)));
-	background: -webkit-linear-gradient(left,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
-	background: -o-linear-gradient(left,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
-	background: -ms-linear-gradient(left,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
-	background: linear-gradient(to right,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7b0d', endColorstr='#ffa84c',GradientType=1 );
+		background: rgb(255,123,13);
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmZjdiMGQiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmZmE4NGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: -moz-linear-gradient(left,  rgba(255,123,13,1) 50%, rgba(255,168,76,1) 50%);
+		background: -webkit-gradient(linear, left top, right top, color-stop(50%,rgba(255,123,13,1)), color-stop(50%,rgba(255,168,76,1)));
+		background: -webkit-linear-gradient(left,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
+		background: -o-linear-gradient(left,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
+		background: -ms-linear-gradient(left,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
+		background: linear-gradient(to right,  rgba(255,123,13,1) 50%,rgba(255,168,76,1) 50%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7b0d', endColorstr='#ffa84c',GradientType=1 );
 
 	  }
 	 
@@ -925,7 +932,7 @@
 				apply_source_formatting : true,
 				
 				{include file="../../html/templates/cfg.tinymce.templates.json"}
-				
+
 			});  
 		}
 	</script> 
