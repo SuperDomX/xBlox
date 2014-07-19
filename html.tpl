@@ -1,7 +1,5 @@
+{if $masterKey.is.admin}  
 <div class="{$method}-blox-{$bloxid}"> 
-	{if $masterKey.is.admin}  
-
-
 	<!--                     
              77                       77777             
         7 .....                      7.....             
@@ -26,7 +24,7 @@
                   ....~~~~~?++...7                      
                    ....~~~~+++..                        
                    7...~~~+++....                       
-                    ...~~~+++?........                  
+                    ...~~~+++?........                   
                     ...=~~++++777++....7                
                     ...~~~++++777+++...                 
                     ...=~~=+++~~~~~~...7                
@@ -34,7 +32,7 @@
                     ...~~~++++........7                 
                     :...~~+++.......                    																										
                     7..........                         
-                        .....: 7   
+                        .....: 7    
 	-->
 	{include file="~blox/clock.tpl" assign=clock} 
 	
@@ -60,23 +58,26 @@
 			<i class="fa fa-eject"> </i>
 			<i class="fa fa-circle"> </i> -->
 		 </a>
-	{/if}
+	
 		<div id="mesh-source-{$bloxid}" class="content"> 
+			<div class="tinymce_editor" id="mesh-source-{$bloxid}-html-edtior">
+			{/if}
+			
+				{$blox_cfg.html}
+			
+			{if $masterKey.is.admin}
+				</div>
+			{/if}
+			
 			<style type="text/css">
 				{$blox_cfg.css}
 			</style>
 
-			<div class="tinymce_editor" id="mesh-source-{$bloxid}-html-edtior">{$blox_cfg.html}</div>
-
-			
-
 			<script type="text/javascript">
 				{$blox_cfg.js}
 			</script> 
-		</div>
-
 	{if $masterKey.is.admin}
-
+		</div>
 	</div>
  
  	
@@ -899,8 +900,5 @@
 			{include file="../../html/templates/cfg.tinymce.json"}
 		}); 
 	</script> 
-	{/if}
-
-
-
 </div>
+{/if}
