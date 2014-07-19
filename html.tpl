@@ -37,27 +37,36 @@
 	{include file="~blox/clock.tpl" assign=clock} 
 	
 	<div class="front">
-		<a class="action btn btn-lg btn-warning" style="right: 40%; left: 40%; z-index: 1;">
-			<!-- <i class="fa fa-play"> </i> -->
-			
-			<i class="fa fa-cube fa-spin"> </i>
-			
-			<i class="fa fa-css3"> </i> 
-			<i class="fa fa-html5"> </i> 
+		<menu class="" style="right: 40%; left: 40%; z-index: 1; position: fixed;">
+			<div class="btn-group">
+				<!-- <div class="btn btn-default active btn-lg">
+					<i class="fa fa-cube fa-spin"> </i>
+				</div> -->
 
-			<i class="fa fa-coffee"> </i>
-			<i class="fa fa-code"> </i>
+				<div class="btn btn-default active disabled btn-lg">
+					<span class="fa fa-spin-reverse">
+						<i class="fa fa-gear fa-spin-reverse"></i><i class="fa fa-gear fa-spin-slow"></i>  
+				</div>
+				<div class="btn btn-info btn-lg" onclick="window.tinyMesh(this)"> 
+					   <i class="fa fa-coffee"> </i> 
+				</div>
 
-			<span class="fa fa-spin-reverse">
-			<i class="fa fa-gear fa-spin-reverse"></i><i class="fa fa-gear fa-spin-slow"></i> 
-		</span> 
+				<div class="btn btn-success btn-lg action">
+					
+					
+					<i class="fa fa-html5"> </i>
+					<i class="fa fa-css3"> </i> 
+					<i class="fa fa-code"> </i>  
+				</div>	
+			</div>
+			
 			<!-- <i class="fa fa-"> </i> -->
 <!-- 
 			<i class="fa fa-forward"> </i>
 			<i class="fa fa-fast-forward"> </i>
 			<i class="fa fa-eject"> </i>
 			<i class="fa fa-circle"> </i> -->
-		 </a>
+		 </menu>
 	
 		<div id="mesh-source-{$bloxid}" class="content"> 
 			<div class="tinymce_editor" id="mesh-source-{$bloxid}-html-edtior">
@@ -85,7 +94,7 @@
 
 	<div class="back" style="overflow: hidden;">
 		<!-- Fixed navbar -->
-		<div class="navbar navbar-default navbar-fixed-top navbar-inverse" style="z-index: 99;"  role="navigation">
+		<div class="navbar navbar-default navbar-fixed-top navbar-inverse godbar" style="z-index: 99;"  role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -511,6 +520,9 @@
 	    	eject : function () { 
 		    	$('.{$method}-blox-{$bloxid}').removeClass('flip');
 				$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me');  
+				$('#mesh-code-editor').attr({
+			      		src : 'about:blank'
+			      });
 	    	}
 
 	    };
@@ -663,7 +675,7 @@
 
 	  /* -- make sure to declare a default for every property that you want animated -- */
 	  /* -- general styles, including Y axis rotation -- */
-	.{$method}-blox-{$bloxid} .front a.action{
+	.{$method}-blox-{$bloxid} .front menu:first-child{
 		position           : fixed !important;
 		top                : -55px;  
 		left               : 0px;
@@ -672,8 +684,8 @@
 		transition         : all .3s linear;
 	}
 
-	.{$method}-blox-{$bloxid} .front:hover a.action{
-		top: 0px;
+	.{$method}-blox-{$bloxid} .front:hover menu:first-child{
+		top: 20px;
 		left: 0px;
 	}
 
@@ -814,91 +826,108 @@
 	-->
 	<script src="/bin/js/tinymce/tinymce.min.js"></script>
 	<script type="text/javascript">
-		tinymce.init({
-			selector : ".tinymce_editor",
-			inline   : true,
-			
-		    save_enablewhendirty: true,
-		    save_onsavecallback: function() { 
-		    	var html = tinymce.get('mesh-source-{$bloxid}-html-edtior').save(); 
-		    	//$('#mesh-code-editor')[0].contentWindow.htmlBox.setValue(s);
-
-				console.log("Saving HTML..."); 
-		    	$.ajax({
-		    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
-		    		type     : "GET",	 
-					dataType : "json",
-				    success: function(data){  
-						console.log("Loading Latest CSS & JS HTML..."); 
-						if(data.success){
-					    	$.ajax({
-								url 	 : "/{$toBackDoor}/{$Xtra}/save/{$bloxid}/.json",
-								type     : "POST",	
-								data     : {
-									blox : {
-										js : {
-											quest_id : {$bloxid},
-											cfg_option : 'js-source',
-											cfg_params : data.js
-										},
-										css : {
-											quest_id : {$bloxid},
-											cfg_option : 'css-source',
-											cfg_params : data.css
-										},
-										html : {
-											quest_id : {$bloxid},
-											cfg_option : 'html-source',
-											cfg_params : html
-										}
-									} 
-								},
-								dataType : "json",
-							    success: function(data){ 
-									if(data.success){
-										console.log("Saved");
-										$('.{$method}-blox-{$bloxid}').removeClass('flip');
-										$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me'); 
-
-									}else{
-										alert(data.error);
-									}
-							    }
-							}); 
-
-
-
-						}else{
-							alert(data.error);
-						}
-				    }
-		    	}); 
-
+		window.tinyMesh = function  (t) {
+			$(t).addClass('active');
+			TINY = tinymce.init({
+				selector : ".tinymce_editor",
+				inline   : true,
 				
+			    save_enablewhendirty: true,
+			    save_onsavecallback: function() { 
+			    	var html = tinymce.get('mesh-source-{$bloxid}-html-edtior').save(); 
+			    	//$('#mesh-code-editor')[0].contentWindow.htmlBox.setValue(s);
 
-		   //  	console.log("Saving");
-		   //  	$.ajax({
-		   //  		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
-		   //  		type     : "POST",	
-					// data     : {
-					// 	blox : {
-					// 		quest_id : {$bloxid},
-					// 		cfg_option : 'html-source',
-					// 		cfg_params : s
-					// 	} 
-					// },
-					// dataType : "json",
-				 //    success: function(data){ 
-					// 	if(data.success){
-					// 		console.log("Saved");
-					// 	}else{
-					// 		alert(data.error);
-					// 	}
-				 //    }
-		   //  	}); 
-		    }, 
-			{include file="../../html/templates/cfg.tinymce.json"}
-		}); 
+					console.log("Saving HTML..."); 
+			    	$.ajax({
+			    		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
+			    		type     : "GET",	 
+						dataType : "json",
+					    success: function(data){  
+							console.log("Loading Latest CSS & JS HTML..."); 
+							if(data.success){
+						    	$.ajax({
+									url 	 : "/{$toBackDoor}/{$Xtra}/save/{$bloxid}/.json",
+									type     : "POST",	
+									data     : {
+										blox : {
+											js : {
+												quest_id : {$bloxid},
+												cfg_option : 'js-source',
+												cfg_params : data.js
+											},
+											css : {
+												quest_id : {$bloxid},
+												cfg_option : 'css-source',
+												cfg_params : data.css
+											},
+											html : {
+												quest_id : {$bloxid},
+												cfg_option : 'html-source',
+												cfg_params : html
+											}
+										} 
+									},
+									dataType : "json",
+								    success: function(data){ 
+										if(data.success){
+											console.log("Saved");
+											$('.{$method}-blox-{$bloxid}').removeClass('flip');
+											$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me'); 
+
+										}else{
+											alert(data.error);
+										}
+								    }
+								}); 
+
+
+
+							}else{
+								alert(data.error);
+							}
+					    }
+			    	}); 
+
+					
+
+			   //  	console.log("Saving");
+			   //  	$.ajax({
+			   //  		url 	 : "/{$toBackDoor}/{$Xtra}/{$method}/{$bloxid}/.json",
+			   //  		type     : "POST",	
+						// data     : {
+						// 	blox : {
+						// 		quest_id : {$bloxid},
+						// 		cfg_option : 'html-source',
+						// 		cfg_params : s
+						// 	} 
+						// },
+						// dataType : "json",
+					 //    success: function(data){ 
+						// 	if(data.success){
+						// 		console.log("Saved");
+						// 	}else{
+						// 		alert(data.error);
+						// 	}
+					 //    }
+			   //  	}); 
+			    }, 
+				plugins: [
+				    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+				    "searchreplace wordcount visualblocks visualchars code fullscreen",
+				    "insertdatetime media nonbreaking save table contextmenu directionality",
+				    "emoticons template paste textcolor colorpicker textpattern save"
+				],
+				menubar : false,
+				toolbar: "save | insertfile undo redo | styleselect |  alignleft aligncenter alignright alignjustify  | forecolor backcolor  |  bold italic | bullist numlist outdent indent | link image media | charmap table insertdatetime  | template print",
+
+				 
+				image_advtab: true,
+				apply_source_formatting : true,
+				
+				{include file="../../html/templates/cfg.tinymce.templates.json"}
+				
+			});  
+		}
 	</script> 
 </div>
 {/if}
