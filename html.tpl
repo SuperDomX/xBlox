@@ -578,12 +578,10 @@
 	    }
 
 	    // BackPanel
-	    $('.{$method}-blox-{$bloxid} .edit-submit').click(function(e){ 
+	    $('.{$method}-blox-{$bloxid} .edit-submit').click(function(e){  
 
-	    	$('.{$method}-blox-{$bloxid} .back div:first-child.navbar').removeClass('godbar');
-
-	    	var content = $('.{$method}-blox-{$bloxid} .front .content');
-
+	    	
+	    	var content = $('.{$method}-blox-{$bloxid} .front .content'); 
 	    	var editor = tinyMCE.get('mesh-source-{$bloxid}-html-edtior');
 
 
@@ -638,8 +636,8 @@
 					if(data.success){
 						console.log("Saved");
 						$('.{$method}-blox-{$bloxid}').removeClass('flip');
-						$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me'); 
-
+						$('.{$method}-blox-{$bloxid}').parent().removeClass('fullscreen-me');  
+	    				$('.{$method}-blox-{$bloxid} .back div:first-child.navbar').removeClass('godbar');
 					}else{
 						alert(data.error);
 					}
