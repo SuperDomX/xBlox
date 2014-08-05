@@ -95,7 +95,7 @@
 							preg_match_all('/@([a-z]+)\s+(.*?)\s*(?=$|@[a-z]+\s)/s', $data, $matches);
 							$info = array_combine($matches[1], $matches[2]);
 
-							if( isset($info['blox']) && ($method == null || $method == $info['name'] ) && !isset($info['backdoor']) ){
+							if( isset($info['blox']) && ($method == null || $method == $info['name'] )  ){
 								$blox[$rClass->name][$info['name']]= $info;
 							}
 
@@ -441,9 +441,10 @@ $blox 	= $q->Select('*','blox_quest',array(
 
 		/**
 			@name topX
-			@blox topX
+			@blox Top Ten
 			@icon circle
-			@desc test
+			@desc Test 
+			@filter read
 			@backdoor true
 		**/
 		public function topX($value='')

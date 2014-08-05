@@ -169,12 +169,14 @@ color: white;
 	{foreach $blox as $k => $v}
     	 {foreach $v as $b => $x}
     	 		{assign var=online value=0}
+
     	 		{foreach $oBlox as $b => $o}
 	 				{if $o['blox'] == "{$k}-{$x['name']}"}
 	 					{assign var=online value=$o['online']}
 	 				{/if}
         	 	{/foreach} 
 
+{if !$x.backdoor}
 
             	 <div class="blox"  blox-id="{$x['id']}" >
 					<a data-toggle="modal" href="#windowTitleDialog">
@@ -189,7 +191,7 @@ color: white;
 			            </div>
 		            </a>
 	            </div>
-            
+     {/if}       
         {/foreach}
     {/foreach}
 
