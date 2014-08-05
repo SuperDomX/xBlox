@@ -1,3 +1,4 @@
+{include file="~widgets/billboard.tpl"}
 <div class="row">        
 
     <div class="col-md-7"> 
