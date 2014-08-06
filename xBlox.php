@@ -2,7 +2,7 @@
 /**
  * @name Blox
  * @desc Building your Domain blox by blox
- * @version v1.1.1
+ * @version v1.1.2
  * @author i@xtiv.net
  * @icon blueprint4.png
  * @mini cubes
@@ -95,7 +95,7 @@
 							preg_match_all('/@([a-z]+)\s+(.*?)\s*(?=$|@[a-z]+\s)/s', $data, $matches);
 							$info = array_combine($matches[1], $matches[2]);
 
-							if( isset($info['blox']) && ($method == null || $method == $info['name'] ) ){
+							if( isset($info['blox']) && ($method == null || $method == $info['name'] )  ){
 								$blox[$rClass->name][$info['name']]= $info;
 							}
 
@@ -439,6 +439,14 @@ $blox 	= $q->Select('*','blox_quest',array(
 			
 		}
 
+		/**
+			@name topX
+			@blox Top Ten
+			@icon circle
+			@desc Test 
+			@filter read
+			@backdoor true
+		**/
 		public function topX($value='')
 		{
 			
