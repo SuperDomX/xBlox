@@ -2,7 +2,7 @@
 /**
  * @name Blox
  * @desc Building your Domain blox by blox
- * @version v1.1.2
+ * @version v1(2.0)
  * @author i@xtiv.net
  * @icon blueprint4.png
  * @mini cubes
@@ -45,6 +45,15 @@
 					'cfg_option'	=> array('Type'=>'varchar(50)'),
 					'cfg_params'	=> array('Type'=>'blob'),
 					'cfg_timestamp' => array('Type'=>'TIMESTAMP','Default'=>'CURRENT_TIMESTAMP') 
+				),
+
+				// Blox watch is a list of admin blox that the user can automatically 
+				'blox_watch' => array(
+					'user_id' => array('Type'=>'int(8)'),
+					'title'   => array('Type'=>'varchar(50)'),
+					'path'    => array('Type'=>'varchar(255)'),
+					'col'     => array('Type'=>'int(1)','Default'=>6),
+					'weight'  => array('Type'=>'int(3)','Default'=>0)
 				)
 			);
 		}
@@ -139,7 +148,6 @@
 		}
 
 		function autoRun($sDom){
-
 			// Check to make sure we have the proper files.
 			if(!is_file("")) { 
     			// git("submodule add --force https://github.com/XenGenie/Hydrogen x/Hydrogen ");
@@ -148,26 +156,13 @@
 
 			$this->_comment("Entering through Blox");
 			// Does this need to run - everytime!?
-			
-			// if(!$sDom->AREA51){
-			// 	$q = $this->q();
-			// 	$q->mBy = array('weight'=>'ASC');
-			// 	$blox = $q->Select('*','blox');
-			// 	$this->set('blox',$blox);
-			// }
-			 
 
 			if($sDom->Key['is']['admin']){
-
 				$quest = strtolower(str_replace('%20', '-', $_SERVER['REQUEST_URI']));
 
-
-				$q = $this->q();
-
-				
+				$q = $this->q(); 
 
 				$qBlox = $this->qBlox();
-
 				$blox 	= $q->Select('*','blox_quest',array(
 					'quest' => $quest.'*'
 				));
@@ -178,7 +173,7 @@
 					$rBlox[$t[0]][$t[1]]['id'] = $c['id'];
 				}
 
-$blox 	= $q->Select('*','blox_quest',array(
+				$blox 	= $q->Select('*','blox_quest',array(
 					'quest' => $quest
 				));
 
@@ -186,22 +181,20 @@ $blox 	= $q->Select('*','blox_quest',array(
 					$t = explode('-', $c['blox']);
 					$rBlox[$t[0]][$t[1]] = $qBlox[$t[0]][$t[1]];
 					$rBlox[$t[0]][$t[1]]['id'] = $c['id'];
-				}
+				} 
 
-				
-
-// 				 var_dump($rBlox);
-// exit;
-				// $qBlox  = $this->qBlox() ;
-
-				$this->set('qBlox', $this->qBlox() );
-				$this->set('blox', $rBlox );
+				$r['qBlox'] = $this->qBlox();
+				$r['blox']  = $rBlox ;
+				$r['watchtower'] = $this->watchtower();
 			}
 
 			if(isset($_POST['bloxSwitch'])){
-				return $this->bloxSwitch($_POST['bloxSwitch']);
+				$r = $this->bloxSwitch($_POST['bloxSwitch']);
+			}elseif (isset($_POST['watchtower'])) {
+				$r = $this->bloxSwitch($_POST['watchtower']);
 			}
 
+			return $r;
 		}
 
 		/**
@@ -735,6 +728,31 @@ $blox 	= $q->Select('*','blox_quest',array(
 			# code...
 		}
 
+		protected function watchtower($s=null){ 
+			$q = $this->q();
+			$u = $_SESSION['user'];
+			$d = $_POST;   
+
+			$r['data'] = $d; 
+
+			$d['user_id'] = $u['id'];
+
+			switch ($s) {
+				case 'add':
+					$del = $q->Select('id','blox_watch',$d);
+
+					$r['success'] = ( !empty($del[0]) ) ? $q->Delete('blox_watch',$d) : $q->Insert('blox_watch',$d);						
+				break;
+				
+				default:
+					$r['data'] = $q->Select('*','blox_watch',array(
+						'user_id' => $u['id']
+					));
+				break;
+			} 
+			$r['error'] = $q->error;
+			return $r;
+		}
 	}
 
 ?>
