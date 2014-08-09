@@ -157,7 +157,7 @@
 			$this->_comment("Entering through Blox");
 			// Does this need to run - everytime!?
 
-			if($sDom->Key['is']['admin']){
+			if($this->Key['is']['admin']){
 				$quest = strtolower(str_replace('%20', '-', $_SERVER['REQUEST_URI']));
 
 				$q = $this->q(); 
@@ -183,7 +183,7 @@
 					$rBlox[$t[0]][$t[1]]['id'] = $c['id'];
 				} 
 
-				$r['qBlox'] = $this->qBlox();
+				$r['qBlox'] = $qBlox;
 				$r['blox']  = $rBlox ;
 				$r['watchtower'] = $this->watchtower();
 			}
