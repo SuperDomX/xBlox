@@ -2,8 +2,7 @@
 	.blox {
 		display  : inline-block;
 		width    : 200px;
-		height   : 200px;
-		margin   : -20px;
+		height   : 200px; 
 		position : relative;
 	}
 
@@ -124,11 +123,9 @@ color: white;
 	
 </style>
 
-<!-- <h1>Blox on this page:</h1> -->
-<br/>
-<br/>
-<br/>
-	<div class="text-center row"> 
+	<div class="row text-align-center "> 
+
+	<h1>Blox on this page:</h1> 
     <!-- <div class="blox"><div class="hover">
     	 
         <div class="alert alert-primary  col-md-12">
@@ -168,30 +165,29 @@ color: white;
  
 	{foreach $blox as $k => $v}
     	 {foreach $v as $b => $x}
-    	 		{assign var=online value=0}
+	 		{assign var=online value=0}
 
-    	 		{foreach $oBlox as $b => $o}
-	 				{if $o['blox'] == "{$k}-{$x['name']}"}
-	 					{assign var=online value=$o['online']}
-	 				{/if}
-        	 	{/foreach} 
+	 		{foreach $oBlox as $b => $o}
+ 				{if $o['blox'] == "{$k}-{$x['name']}"}
+ 					{assign var=online value=$o['online']}
+ 				{/if}
+    	 	{/foreach} 
 
-{if !$x.backdoor}
+			{if !$x.backdoor}
+			 <div class="blox"  blox-id="{$x['id']}" >
+				<a data-toggle="modal" href="#windowTitleDialog">
+		        	<div data-filter="{$k}" class="hover {if $online == 1}activeBlox{else}deactiveBlox{/if}" id="toy-{$k}-{$x['name']}" title="{$x['blox']}" icon="{$x['icon']}"> 
+		               <div class="widget alert alert-{if $online == 1}success{else}info{/if}  col-md-12 ">
+					    	{$x['desc']}
+						</div>
+		              	<h2 class=" ">{$x['blox']}</h2>
 
-            	 <div class="blox"  blox-id="{$x['id']}" >
-					<a data-toggle="modal" href="#windowTitleDialog">
-		            	<div data-filter="{$k}" class="hover {if $online == 1}activeBlox{else}deactiveBlox{/if}" id="toy-{$k}-{$x['name']}" title="{$x['blox']}" icon="{$x['icon']}"> 
-			               <div class="alert alert-{if $online == 1}success{else}info{/if}  col-md-12 ">
-						    	{$x['desc']}
-							</div>
-			              	<h2 class=" ">{$x['blox']}</h2>
-
-			                <i class="fa fa-{$x['icon']} fa-5x "></i>  
-			              	
-			            </div>
-		            </a>
-	            </div>
-     {/if}       
+		                <i class="fa fa-{$x['icon']} fa-5x "></i>  
+		              	
+		            </div>
+		        </a>
+		    </div>
+		     {/if}       
         {/foreach}
     {/foreach}
 
