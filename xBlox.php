@@ -37,7 +37,7 @@
 					'quest' 	=> array('Type'=>'varchar(255)'),
 					'blox'		=> array('Type'=>'varchar(50)'),
 					'params'	=> array('Type'=>'blob'), 
-					'online'	=> array('Type'=>'boolean','Default'=>true)
+					'online'	=> array('Type'=>'boolean','Default'=>1)
 				),
 				// This should hold the config for the blox config. 
 				'blox_blox' => array(
