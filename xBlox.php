@@ -5,7 +5,7 @@
  * @version v1(2.0)
  * @author i@xtiv.net
  * @icon blueprint4.png
- * @mini cubes
+ * @mini cube
  * @see construct
  * @link blox
  * @alpha true
