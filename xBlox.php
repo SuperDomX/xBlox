@@ -153,6 +153,8 @@
     			// git("submodule add --force https://github.com/XenGenie/Hydrogen x/Hydrogen ");
 			}
 
+			$r = null;
+
 
 			$this->_comment("Entering through Blox");
 			// Does this need to run - everytime!?

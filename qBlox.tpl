@@ -125,7 +125,7 @@ color: white;
 
 	<div class="row text-align-center "> 
 
-	<h1>Toy Blox:</h1> 
+	<!-- <h1>Toy Blox:</h1>  -->
     <!-- <div class="blox"><div class="hover">
     	 
         <div class="alert alert-primary  col-md-12">
