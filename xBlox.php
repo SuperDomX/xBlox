@@ -1,11 +1,11 @@
 <?php
 /**
- * @name Blox
- * @desc Building your Domain blox by blox
+ * @name Engine Room
+ * @desc Add / Remove Engine Blox
  * @version v1(2.0)
  * @author i@xtiv.net
  * @icon blueprint4.png
- * @mini cube
+ * @mini wrench
  * @see construct
  * @link blox
  * @alpha true
@@ -296,7 +296,15 @@
 			return $b;
 		}
 
+		public function blueprints($value='')
+		{
+			# code...
+		}
 
+		public function installTheme($value='')
+		{
+			# code...
+		}
 		/**
 		 * @remotable
 		**/
@@ -434,17 +442,50 @@
 			
 		}
 
+		public function _readThemes()
+		{
+			$dir = DOC_ROOT.$this->_CFG['dir']['html'].'/themes';
+
+			$themes= array();
+
+			if ($handle = opendir($dir)) {
+			    while (false !== ($entry = readdir($handle))) {
+			        if ($entry != "." && $entry != "..") {
+			            $themes[] = "$entry";
+			        }
+			    }
+			    closedir($handle);
+			}
+
+			return $themes;
+		}
+
+		public function ai()
+		{
+			# code...
+		}
+
+		public function templates($value='')
+		{
+			
+
+			return array(
+				'themes' => $this->_readThemes()
+			);
+		}
+
 		/**
 			@name topX
-			@blox Top Ten
+			@blox Engine Blox
 			@icon circle
 			@desc Test 
+			@col 6
 			@filter read
 			@backdoor true
 		**/
 		public function topX($value='')
 		{
-			
+			// Code to run for blox.
 		}
 		/**
 
