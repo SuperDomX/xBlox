@@ -7,8 +7,8 @@
                     <li class="active">
                         <a href="#stats" data-toggle="tab">
                         	Themes
-                        	<span class="label label-important">
-                        	10
+                        	<span class="label label-info">
+                        	{$themes|@count}
                         	</span>
                         </a>
                     </li>
