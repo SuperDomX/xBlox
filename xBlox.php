@@ -1,11 +1,11 @@
 <?php
 /**
- * @name Engine Room
+ * @name Blox
  * @desc Add / Remove Engine Blox
  * @version v1(2.0)
  * @author i@xtiv.net
  * @icon blueprint4.png
- * @mini wrench
+ * @mini cubes 
  * @see construct
  * @link blox
  * @alpha true
