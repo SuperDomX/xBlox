@@ -2,8 +2,8 @@
 /**
  * @name    Objects 
  * @desc    Add / Remove Engine Blox
- * @version v1(2.0)
- * @author  i@xtiv.net
+ * @version v0.1(160710)
+ * @author  @xopherdeep
  * @icon    blueprint4.png
  * @mini    object-group 
  * @see     construct
